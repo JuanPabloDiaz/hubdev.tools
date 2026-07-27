@@ -44,9 +44,10 @@ type CategoryProps = {
   name: string
   slug: string
   href: string
+  resourceCount?: number
 }
 
-export function CategoryPill({ name, slug, href }: CategoryProps) {
+export function CategoryPill({ name, slug, href, resourceCount }: CategoryProps) {
   const pathname = usePathname()
   const isActive = pathname === href
   const Icon = getIconBySlug({ slug })
@@ -62,8 +63,16 @@ export function CategoryPill({ name, slug, href }: CategoryProps) {
           : 'hover:bg-light-600/40 dark:hover:bg-purple-300/10 dark:hover:text-purple-300 dark:hover:border-purple-300/20'
       )}
     >
-      <Icon className='size-4' />
+      <Icon className='size-4 shrink-0' />
       <span>{name}</span>
+      {resourceCount ? (
+        <small
+          className='ml-auto pl-3 tabular-nums text-muted-foreground'
+          aria-label={`${resourceCount} resources`}
+        >
+          {resourceCount}
+        </small>
+      ) : null}
     </Link>
   )
 }

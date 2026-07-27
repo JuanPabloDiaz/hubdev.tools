@@ -32,7 +32,15 @@ export const getData = async ({ from, to }: { from: number; to: number }) => {
 export const getCategories = async () => {
   const { data, error } = await supabase
     .from('new_categories')
-    .select('id, name, slug, emoji')
+    .select(
+      `
+      id,
+      name,
+      slug,
+      emoji,
+      new_resources!new_resources_category_fk(count)
+    `
+    )
     .eq('isActive', true)
     .order('name')
 
@@ -41,7 +49,10 @@ export const getCategories = async () => {
     return
   }
 
-  return data
+  return data.map(({ new_resources, ...category }) => ({
+    ...category,
+    resourceCount: new_resources[0]?.count ?? 0
+  }))
 }
 
 export const getCategoryDetails = async ({ slug }: { slug: string }) => {

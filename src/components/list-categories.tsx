@@ -16,6 +16,7 @@ export async function ListCategories() {
               name={category.name}
               slug={category.slug as string}
               href={href}
+              resourceCount={category.resourceCount}
             />
           )
         })}
