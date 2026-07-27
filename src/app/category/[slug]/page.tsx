@@ -1,12 +1,14 @@
 import { Suspense } from 'react'
 import { Metadata } from 'next'
+import { notFound, redirect } from 'next/navigation'
 
-import { getCategoryDetails } from '@/services/list'
+import { getCategoryDetails, getSubcategoriesByCategorySlug } from '@/services/list'
 import { Container } from '@/components/container'
 import { ErrorState } from '@/components/error-state'
 import { Hero } from '@/components/hero'
 import { Home } from '@/components/home'
 import { LoadingResources } from '@/components/loading'
+import { SubcategoryFilters } from '@/components/subcategory-filters'
 
 export const maxDuration = 60
 
@@ -19,12 +21,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
 
-  if (slug == 'all') {
-    return {
-      title: 'Resources'
-    }
-  }
-
   const data = await getCategoryDetails({
     slug
   })
@@ -35,8 +31,7 @@ export async function generateMetadata({
     }
   }
 
-  const category = data[0]
-  const { name, description } = category
+  const { name, description } = data
 
   return {
     title: name,
@@ -55,44 +50,54 @@ export default async function Page({
     slug: string
   }>
   searchParams: Promise<{
-    query: string
+    query?: string
+    subcategory?: string
   }>
 }) {
   const { slug } = await params
-  let heroTitle = ''
-  let heroDescription = ''
 
   if (slug === 'all') {
-    heroTitle = 'Resources'
-    heroDescription = 'Discover an awesome list of resources for developers.'
-  } else {
-    const data = await getCategoryDetails({
-      slug
-    })
-    if (!data) return <ErrorState error='An error occurred. Please try again later.' />
-
-    const category = data[0]
-
-    const { name, description: categoryDescription } = category
-    heroTitle = name
-    heroDescription = categoryDescription as string
+    redirect('/')
   }
 
-  const { query } = await searchParams
+  const [category, subcategories] = await Promise.all([
+    getCategoryDetails({
+      slug
+    }),
+    getSubcategoriesByCategorySlug({
+      categorySlug: slug
+    })
+  ])
+
+  if (!category) {
+    notFound()
+  }
+
+  if (!subcategories) {
+    return <ErrorState error='An error occurred. Please try again later.' />
+  }
+
+  const { query, subcategory } = await searchParams
 
   return (
     <Container>
       <Hero
-        title={heroTitle}
-        description={heroDescription!}
+        title={category.name}
+        description={category.description ?? ''}
+      />
+      <SubcategoryFilters
+        categorySlug={slug}
+        subcategories={subcategories}
+        selectedSubcategory={subcategory}
       />
       <Suspense
         fallback={<LoadingResources />}
-        key={query}
+        key={`${query ?? ''}:${subcategory ?? ''}`}
       >
         <Home
           query={query}
           slug={slug}
+          subcategory={subcategory}
         />
       </Suspense>
     </Container>

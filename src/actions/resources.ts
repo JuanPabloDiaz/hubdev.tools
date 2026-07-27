@@ -19,7 +19,7 @@ export const listResources = async ({
   if (!data) return
 
   const formattedData = data.map((item) => {
-    const { categories, ...resource } = item
+    const { new_categories: categories, ...resource } = item
     const { name } = categories ?? {}
     return {
       ...resource,
@@ -32,20 +32,23 @@ export const listResources = async ({
 export const listResourcesBySlug = async ({
   from,
   to,
-  slug
+  slug,
+  subcategory
 }: {
   from: number
   to: number
   slug: string
+  subcategory?: string
 }) => {
   const data = await getResourcesByCategorySlug({
     from,
     to,
-    slug
+    slug,
+    subcategory
   })
   if (!data) return
   const formattedData = data.map((item) => {
-    const { categories, ...resource } = item
+    const { new_categories: categories, new_subcategories: _subcategories, ...resource } = item
     const { name } = categories ?? {}
     return {
       ...resource,

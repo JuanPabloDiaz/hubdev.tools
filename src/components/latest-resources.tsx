@@ -1,6 +1,4 @@
 import { Suspense } from 'react'
-import { ArrowRightCircleIcon } from 'lucide-react'
-import { Link } from 'next-view-transitions'
 
 import { getLatestResources } from '@/services/dashboard'
 import { listFavorites } from '@/actions/favorites'
@@ -9,10 +7,7 @@ import { LoadingResources } from '@/components/loading'
 import { SpecialCard } from '@/components/special-card'
 
 async function ListLatestResources() {
-  const [data, favoriteIds] = await Promise.all([
-    getLatestResources(),
-    listFavorites()
-  ])
+  const [data, favoriteIds] = await Promise.all([getLatestResources(), listFavorites()])
 
   if (!data) {
     return <ErrorState error='Something went wrong' />
@@ -51,18 +46,9 @@ export function LatestResources() {
         <h2 className='text-2xl text-balance font-semibold text-light-800 dark:text-primary'>
           The latest
         </h2>
-        <div className='flex items-center justify-between'>
-          <p className='text-sm text-pretty max-w-lg text-muted-foreground'>
-            Check out the freshest resources right now.
-          </p>
-          <Link
-            href='/category/all'
-            className='text-sm text-blue-700 dark:text-anchor sm:flex hidden items-center hover:underline hover:underline-offset-2'
-          >
-            See all
-            <ArrowRightCircleIcon className='size-4 ml-2' />
-          </Link>
-        </div>
+        <p className='text-sm text-pretty max-w-lg text-muted-foreground'>
+          Check out the freshest resources right now.
+        </p>
       </div>
       <Suspense fallback={<LoadingResources />}>
         <ListLatestResources />

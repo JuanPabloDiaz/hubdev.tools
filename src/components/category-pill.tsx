@@ -2,35 +2,15 @@
 
 import {
   Sparkles,
-  Plug,
-  Accessibility,
-  BarChart3,
-  Clapperboard,
-  Lock,
   FileText,
-  Puzzle,
-  PieChart,
   BookOpen,
   Database,
-  BookMarked,
-  Globe,
-  Mail,
-  Layers,
-  Type,
-  FormInput,
-  Boxes,
   Server,
   Shapes,
   Palette,
-  Lightbulb,
-  Newspaper,
   Gauge,
   CheckSquare,
-  HardDrive,
-  FlaskConical,
-  Bell,
-  Wrench,
-  LayoutDashboard,
+  Code2,
   Search,
   Heart
 } from 'lucide-react'
@@ -44,42 +24,20 @@ import { plusJakartaSans } from '@/fonts'
 
 const categories = [
   { id: 'ai', icon: Sparkles },
-  { id: 'apis', icon: Plug },
-  { id: 'accessibility', icon: Accessibility },
-  { id: 'analytics', icon: BarChart3 },
-  { id: 'animation', icon: Clapperboard },
-  { id: 'authentication', icon: Lock },
-  { id: 'cms', icon: FileText },
-  { id: 'challenges', icon: Puzzle },
-  { id: 'charts', icon: PieChart },
-  { id: 'course', icon: BookOpen },
-  { id: 'database', icon: Database },
-  { id: 'documentation', icon: FileText },
-  { id: 'domain', icon: Globe },
-  { id: 'email', icon: Mail },
-  { id: 'extensions', icon: Layers },
-  { id: 'font', icon: Type },
-  { id: 'forms', icon: FormInput },
-  { id: 'frameworks', icon: Boxes },
-  { id: 'hosting', icon: Server },
-  { id: 'icon', icon: Shapes },
-  { id: 'illustration', icon: Palette },
-  { id: 'inspiration', icon: Lightbulb },
-  { id: 'newsletter', icon: Newspaper },
-  { id: 'performance', icon: Gauge },
+  { id: 'development', icon: Code2 },
+  { id: 'data-infrastructure', icon: Database },
+  { id: 'ui-design', icon: Palette },
+  { id: 'web-quality', icon: Gauge },
+  { id: 'infrastructure', icon: Server },
+  { id: 'content', icon: FileText },
+  { id: 'learning', icon: BookOpen },
   { id: 'productivity', icon: CheckSquare },
-  { id: 'books', icon: BookMarked },
-  { id: 'storage', icon: HardDrive },
-  { id: 'testing', icon: FlaskConical },
-  { id: 'toast', icon: Bell },
-  { id: 'tool', icon: Wrench },
-  { id: 'ui', icon: LayoutDashboard },
   { id: 'discover', icon: Search },
   { id: 'favorites', icon: Heart }
 ]
 
 function getIconBySlug({ slug }: { slug: string }) {
-  return categories.find((cat) => cat.id === slug)!.icon
+  return categories.find((cat) => cat.id === slug)?.icon ?? Shapes
 }
 
 type CategoryProps = {

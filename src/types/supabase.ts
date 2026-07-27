@@ -41,6 +41,153 @@ export type Database = {
         }
         Relationships: []
       }
+      new_categories: {
+        Row: {
+          bg_color: string | null
+          created_at: string
+          description: string | null
+          emoji: string | null
+          id: number
+          isActive: boolean
+          name: string
+          slug: string
+        }
+        Insert: {
+          bg_color?: string | null
+          created_at?: string
+          description?: string | null
+          emoji?: string | null
+          id?: never
+          isActive?: boolean
+          name: string
+          slug: string
+        }
+        Update: {
+          bg_color?: string | null
+          created_at?: string
+          description?: string | null
+          emoji?: string | null
+          id?: never
+          isActive?: boolean
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      new_resources: {
+        Row: {
+          brief: string | null
+          clicks: number
+          created_at: string
+          description: string
+          embedding: string | null
+          id: string
+          idCategory: number
+          idSubcategory: number
+          image: string
+          last_clicked: string
+          placeholder: string | null
+          slug: string
+          summary: string
+          title: string
+          url: string
+        }
+        Insert: {
+          brief?: string | null
+          clicks?: number
+          created_at?: string
+          description: string
+          embedding?: string | null
+          id?: string
+          idCategory: number
+          idSubcategory: number
+          image: string
+          last_clicked?: string
+          placeholder?: string | null
+          slug: string
+          summary: string
+          title: string
+          url: string
+        }
+        Update: {
+          brief?: string | null
+          clicks?: number
+          created_at?: string
+          description?: string
+          embedding?: string | null
+          id?: string
+          idCategory?: number
+          idSubcategory?: number
+          image?: string
+          last_clicked?: string
+          placeholder?: string | null
+          slug?: string
+          summary?: string
+          title?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'new_resources_category_fk'
+            columns: ['idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'new_resources_subcategory_fk'
+            columns: ['idSubcategory']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'new_resources_taxonomy_fk'
+            columns: ['idSubcategory', 'idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
+            referencedColumns: ['id', 'idCategory']
+          }
+        ]
+      }
+      new_subcategories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          idCategory: number
+          isActive: boolean
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: never
+          idCategory: number
+          isActive?: boolean
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: never
+          idCategory?: number
+          isActive?: boolean
+          name?: string
+          slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'new_subcategories_category_fk'
+            columns: ['idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       pines: {
         Row: {
           created_at: string

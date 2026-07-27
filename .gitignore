@@ -38,3 +38,6 @@ next-env.d.ts
 public/*.wasm
 public/*.js
 public/*.onnx
+
+migration.sql
+resources.json

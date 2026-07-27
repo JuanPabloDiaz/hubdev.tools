@@ -37,7 +37,7 @@ export default async function Image({
     )
   }
 
-  const { name, description } = details[0]
+  const { name, description } = details
 
   return new ImageResponse(
     <div

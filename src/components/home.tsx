@@ -6,12 +6,14 @@ import { PanelResources } from '@/components/panel-resources'
 type HomeProps = {
   query?: string
   slug?: string
+  subcategory?: string
 }
 
-export async function Home({ query, slug }: HomeProps) {
+export async function Home({ query, slug, subcategory }: HomeProps) {
   const data = await search({
     q: query,
-    slug
+    slug,
+    subcategory
   })
   // @ts-ignore
   const { resources, error } = data
@@ -24,6 +26,8 @@ export async function Home({ query, slug }: HomeProps) {
     <PanelResources
       resources={resources}
       favoritesIds={favoritesIds}
+      slug={slug}
+      subcategory={subcategory}
     />
   )
 }
