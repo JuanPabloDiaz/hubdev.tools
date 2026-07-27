@@ -1,11 +1,11 @@
 'use client'
-import Image from 'next/image'
 
 import { ArrowUpRightIcon, HeartIcon } from 'lucide-react'
-import { DEFAULT_BLUR_DATA_URL, HREF_PREFIX } from '@/constants'
+import { HREF_PREFIX } from '@/constants'
 import { cn } from '@/utils/styles'
 import { inter, plusJakartaSans } from '@/fonts'
 import { useFavorite } from '@/hooks/useFavorite'
+import { ResourceImage } from '@/components/resource-image'
 
 type SpecialCardProps = {
   resource: {
@@ -43,20 +43,12 @@ export function SpecialCard({ resource, isFavorite }: SpecialCardProps) {
         dark:hover:border-orange-300/50 p-2.5 grid grid-rows-subgrid row-span-2 gap-3'
     >
       <div className='flex flex-col gap-3'>
-        <div className='relative w-full h-[190px] rounded-md overflow-hidden border'>
-          <Image
-            loading={order < 4 ? 'eager' : 'lazy'}
-            src={image}
-            fill
-            priority={order === 0}
-            alt={`Picture of ${name}`}
-            className='object-cover object-center'
-            decoding='async'
-            placeholder='blur'
-            blurDataURL={placeholder ?? DEFAULT_BLUR_DATA_URL}
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          />
-        </div>
+        <ResourceImage
+          src={image}
+          title={name}
+          placeholder={placeholder}
+          order={order}
+        />
         <div className='flex flex-col gap-1.5'>
           <div className='flex justify-between items-center'>
             <h2 className={cn(plusJakartaSans.className, 'font-semibold text-balance')}>{name}</h2>

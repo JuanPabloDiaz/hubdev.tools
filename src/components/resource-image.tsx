@@ -1,0 +1,29 @@
+import Image from 'next/image'
+
+import { DEFAULT_BLUR_DATA_URL } from '@/constants'
+
+type ResourceImageProps = {
+  src: string
+  title: string
+  placeholder?: string | null
+  order: number
+}
+
+export function ResourceImage({ src, title, placeholder, order }: ResourceImageProps) {
+  return (
+    <div className='relative aspect-video w-full overflow-hidden rounded-md border bg-neutral-100 dark:bg-neutral-950'>
+      <Image
+        loading={order < 4 ? 'eager' : 'lazy'}
+        src={src}
+        fill
+        priority={order === 0}
+        alt={`Screenshot of ${title}`}
+        className='object-contain object-center'
+        decoding='async'
+        placeholder='blur'
+        blurDataURL={placeholder || DEFAULT_BLUR_DATA_URL}
+        sizes='(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw'
+      />
+    </div>
+  )
+}
