@@ -3,10 +3,7 @@ import { createGroq } from '@ai-sdk/groq'
 import { generateObject } from 'ai'
 import * as z from 'zod'
 
-const groq = createGroq({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY
-})
+const groq = createGroq()
 
 export async function POST(request: NextRequest) {
   const data = await request.json()

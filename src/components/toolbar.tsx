@@ -1,6 +1,6 @@
 'use client'
 
-import { startTransition, useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -12,8 +12,8 @@ type ToolbarProps = {
   searchHistory: string[]
 }
 
-export async function addSearch({ input }: { input: string }) {
-  const response = await fetch('/api/update-history', {
+function saveSearch(input: string) {
+  return fetch('/api/update-history', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -23,8 +23,6 @@ export async function addSearch({ input }: { input: string }) {
     }),
     keepalive: true
   })
-
-  return response.json()
 }
 
 export function Toolbar({ searchHistory }: ToolbarProps) {
@@ -58,7 +56,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
     return () => window.removeEventListener('keydown', handleShortcut)
   }, [])
 
-  const navigateToSearch = (input: string, save = true) => {
+  const navigateToSearch = (input: string) => {
     const query = normalizeSearchQuery(input)
 
     if (!isValidSearchQuery(query)) {
@@ -74,13 +72,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
       router.push(getSearchHref(query))
     })
 
-    if (save) {
-      startTransition(() => {
-        void addSearch({
-          input: query
-        }).catch(() => undefined)
-      })
-    }
+    saveSearch(query).catch(() => undefined)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

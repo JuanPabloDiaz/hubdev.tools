@@ -52,7 +52,6 @@ export function ResourceItem({
 
   return (
     <article
-      id={rankPosition ? `resource-${rankPosition}` : undefined}
       className={cn(
         'relative rounded-lg shadow-xs border transition-colors duration-300 ease-in-out resource-item grid grid-rows-subgrid row-span-2 gap-3 p-2.5 border-light-600/70 bg-light-600/20 hover:bg-light-600/70 dark:border-neutral-800/70 dark:bg-[#101010] dark:hover:bg-[#191919]',
         rankPosition === 1 && 'border-amber-400/50 dark:border-amber-400/35',

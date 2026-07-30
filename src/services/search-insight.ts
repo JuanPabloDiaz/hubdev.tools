@@ -9,10 +9,10 @@ import { SearchInsight, SearchQuickAction, SearchResource } from '@/types/search
 import { redis } from '@/ratelimit/redis'
 import { isValidSearchQuery, MAX_SEARCH_QUERY_LENGTH, normalizeSearchQuery } from '@/utils/search'
 
-const groq = createGroq({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY
-})
+const groq = createGroq()
+const canUseRedis = Boolean(
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+)
 
 const insightSchema = z.object({
   headline: z.string().min(1),
@@ -41,10 +41,6 @@ function truncateText(value: string, maxLength: number) {
   if (normalized.length <= maxLength) return normalized
 
   return `${normalized.slice(0, maxLength - 1).trimEnd()}…`
-}
-
-function canUseRedis() {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
 }
 
 function createInsightCacheKey(query: string, resources: SearchResource[]) {
@@ -160,7 +156,7 @@ export async function generateSearchInsight({
 
   const cacheKey = createInsightCacheKey(query, resources)
 
-  if (canUseRedis()) {
+  if (canUseRedis) {
     try {
       const cached = await redis.get<SearchInsight>(cacheKey)
       if (cached) return cached
@@ -202,9 +198,9 @@ Keep every action label at 28 characters or fewer and every action query at 120 
 
     if (!insight) return
 
-    if (canUseRedis()) {
+    if (canUseRedis) {
       try {
-        await redis.set(cacheKey, JSON.stringify(insight), {
+        await redis.set(cacheKey, insight, {
           ex: 60 * 60 * 24
         })
       } catch (error) {

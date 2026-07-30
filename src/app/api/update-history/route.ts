@@ -1,41 +1,48 @@
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(request: NextRequest) {
-  const data = await request.json()
-  const input = data.input
+import { isValidSearchQuery, normalizeSearchQuery } from '@/utils/search'
+
+function parseHistory(value?: string) {
+  if (!value) return []
 
   try {
+    const history: unknown = JSON.parse(value)
+    return Array.isArray(history)
+      ? history.filter((item): item is string => typeof item === 'string')
+      : []
+  } catch {
+    return []
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body: unknown = await request.json()
+    const input =
+      typeof body === 'object' && body !== null && 'input' in body && typeof body.input === 'string'
+        ? normalizeSearchQuery(body.input)
+        : ''
+
+    if (!isValidSearchQuery(input)) {
+      return NextResponse.json({ error: 'Invalid search query.' }, { status: 400 })
+    }
+
     const cookieStore = await cookies()
-    const history = cookieStore.get('history')
-    if (!history) {
-      cookieStore.set('history', JSON.stringify([input]), {
-        secure: true
-      })
-      return NextResponse.json({
-        msg: 'History updated successfully'
-      })
-    }
+    const history = parseHistory(cookieStore.get('history')?.value)
+    const nextHistory = [input, ...history.filter((item) => item !== input)].slice(0, 5)
 
-    // max length of history is 5
-    const data = JSON.parse(history.value) as string[]
-    if (data.length === 5) {
-      data.shift()
-    }
-
-    if (!data.includes(input)) {
-      const newHistory = [input, ...data] as any
-      ;(await cookies()).set('history', JSON.stringify(newHistory), {
-        secure: true
-      })
-    }
-
-    return NextResponse.json({
-      msg: 'History updated successfully'
+    cookieStore.set('history', JSON.stringify(nextHistory), {
+      httpOnly: true,
+      path: '/',
+      secure: process.env.NODE_ENV === 'production'
     })
-  } catch (error) {
-    return NextResponse.json({
-      error: 'An error occurred while updating the history.'
-    })
+
+    return new NextResponse(null, { status: 204 })
+  } catch {
+    return NextResponse.json(
+      { error: 'An error occurred while updating the history.' },
+      { status: 500 }
+    )
   }
 }

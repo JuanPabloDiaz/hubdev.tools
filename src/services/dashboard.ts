@@ -6,10 +6,7 @@ import { getEmbeddings } from '@/services/embeddings'
 
 import { supabase } from './client'
 
-const groq = createGroq({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY
-})
+const groq = createGroq()
 
 export const getFeaturedResources = async () => {
   const { data, error } = await supabase

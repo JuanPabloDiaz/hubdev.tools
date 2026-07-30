@@ -1,7 +1,6 @@
 import { Resource } from '@/types/resource'
 
 export type SearchResource = Resource & {
-  rank: number
   rankPosition: number
 }
 

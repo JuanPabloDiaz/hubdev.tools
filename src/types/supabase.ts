@@ -460,7 +460,6 @@ export type Database = {
           id: string
           image: string
           placeholder: string | null
-          rank: number
           summary: string
           title: string
           url: string
