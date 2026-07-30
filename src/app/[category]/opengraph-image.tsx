@@ -7,7 +7,7 @@ export default async function Image({
   params
 }: {
   params: {
-    slug: string
+    category: string
   }
 }) {
   const size = {
@@ -16,7 +16,7 @@ export default async function Image({
   }
 
   const details = await getCategoryDetails({
-    slug: params.slug
+    slug: params.category
   })
 
   if (!details) {

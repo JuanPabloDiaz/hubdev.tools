@@ -104,6 +104,73 @@ export const getSubcategoriesByCategorySlug = async ({
   }))
 }
 
+export const getSubcategoryDetails = async ({
+  categorySlug,
+  subcategorySlug
+}: {
+  categorySlug: string
+  subcategorySlug: string
+}) => {
+  const { data, error } = await supabase
+    .from('new_subcategories')
+    .select(
+      `
+      id,
+      name,
+      slug,
+      description,
+      new_categories!new_subcategories_category_fk!inner(
+        name,
+        slug
+      )
+    `
+    )
+    .eq('isActive', true)
+    .eq('slug', subcategorySlug)
+    .eq('new_categories.slug', categorySlug)
+    .maybeSingle()
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  if (!data) return
+
+  return {
+    id: data.id,
+    name: data.name,
+    slug: data.slug,
+    description: data.description,
+    category: data.new_categories
+  }
+}
+
+export const getTaxonomyPaths = async () => {
+  const { data, error } = await supabase
+    .from('new_subcategories')
+    .select(
+      `
+      slug,
+      new_categories!new_subcategories_category_fk!inner(
+        slug
+      )
+    `
+    )
+    .eq('isActive', true)
+    .eq('new_categories.isActive', true)
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  return data.map((subcategory) => ({
+    categorySlug: subcategory.new_categories.slug,
+    subcategorySlug: subcategory.slug
+  }))
+}
+
 export const getResourcesByCategorySlug = async ({
   from,
   to,
@@ -115,35 +182,63 @@ export const getResourcesByCategorySlug = async ({
   slug: string
   subcategory?: string
 }) => {
-  let query = supabase
+  if (subcategory) {
+    const { data, error } = await supabase
+      .from('new_resources')
+      .select(
+        `
+        id,
+        title,
+        url,
+        image,
+        summary,
+        brief,
+        placeholder,
+        new_categories!new_resources_category_fk!inner(
+          slug,
+          name
+        ),
+        new_subcategories!new_resources_subcategory_fk!inner(
+          slug
+        )
+      `
+      )
+      .eq('new_categories.slug', slug)
+      .eq('new_subcategories.slug', subcategory)
+      .order('title')
+      .range(from, to)
+
+    if (error) {
+      console.error(error)
+      return
+    }
+
+    return data
+  }
+
+  const { data, error } = await supabase
     .from('new_resources')
     .select(
       `
-    id, 
-    title, 
-    url, 
-    image, 
-    summary, 
-    brief, 
-    placeholder, 
-    new_categories!new_resources_category_fk!inner(
-      slug,
-      name
-    ),
-    new_subcategories!new_resources_subcategory_fk!inner(
-      slug
+      id,
+      title,
+      url,
+      image,
+      summary,
+      brief,
+      placeholder,
+      new_categories!new_resources_category_fk!inner(
+        slug,
+        name
+      ),
+      new_subcategories!new_resources_subcategory_fk(
+        slug
+      )
+    `
     )
-  `
-    )
-    .range(from, to)
-    .order('title')
     .eq('new_categories.slug', slug)
-
-  if (subcategory) {
-    query = query.eq('new_subcategories.slug', subcategory)
-  }
-
-  const { data, error } = await query
+    .order('title')
+    .range(from, to)
 
   if (error) {
     console.error(error)

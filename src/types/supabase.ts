@@ -83,7 +83,7 @@ export type Database = {
           embedding: string | null
           id: string
           idCategory: number
-          idSubcategory: number
+          idSubcategory: number | null
           image: string
           last_clicked: string
           placeholder: string | null
@@ -101,7 +101,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           idCategory: number
-          idSubcategory: number
+          idSubcategory?: number | null
           image: string
           last_clicked?: string
           placeholder?: string | null
@@ -119,7 +119,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           idCategory?: number
-          idSubcategory?: number
+          idSubcategory?: number | null
           image?: string
           last_clicked?: string
           placeholder?: string | null

@@ -1,7 +1,4 @@
-'use client'
-
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utils/styles'
@@ -23,23 +20,6 @@ export function SubcategoryFilters({
   subcategories,
   selectedSubcategory
 }: SubcategoryFiltersProps) {
-  const searchParams = useSearchParams()
-
-  function createHref(subcategory?: string) {
-    const params = new URLSearchParams(searchParams.toString())
-
-    if (subcategory) {
-      params.set('subcategory', subcategory)
-    } else {
-      params.delete('subcategory')
-    }
-
-    const queryString = params.toString()
-    const pathname = `/category/${categorySlug}`
-
-    return queryString ? `${pathname}?${queryString}` : pathname
-  }
-
   const filterClassName = (isActive: boolean) =>
     cn(
       buttonVariants({
@@ -58,7 +38,7 @@ export function SubcategoryFilters({
       aria-label='Filter resources by subcategory'
     >
       <Link
-        href={createHref()}
+        href={`/${categorySlug}`}
         className={filterClassName(!selectedSubcategory)}
         aria-current={!selectedSubcategory ? 'page' : undefined}
       >
@@ -71,7 +51,7 @@ export function SubcategoryFilters({
         return (
           <Link
             key={subcategory.id}
-            href={createHref(subcategory.slug)}
+            href={`/${categorySlug}/${subcategory.slug}`}
             className={filterClassName(isActive)}
             aria-current={isActive ? 'page' : undefined}
           >

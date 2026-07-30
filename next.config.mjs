@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/category/:category',
+        destination: '/:category',
+        permanent: true
+      }
+    ]
+  },
   images: {
     loader: 'custom',
     loaderFile: './loader/cloudinary.js',

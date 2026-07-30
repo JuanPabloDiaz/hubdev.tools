@@ -5,10 +5,13 @@ import {
   FileText,
   BookOpen,
   Database,
+  ChartNoAxesCombined,
+  HardDrive,
+  Mail,
   Server,
   Shapes,
   Palette,
-  Gauge,
+  FlaskConical,
   CheckSquare,
   Code2,
   Search,
@@ -25,11 +28,14 @@ import { plusJakartaSans } from '@/fonts'
 const categories = [
   { id: 'ai', icon: Sparkles },
   { id: 'development', icon: Code2 },
-  { id: 'data-infrastructure', icon: Database },
+  { id: 'database', icon: Database },
+  { id: 'analytics', icon: ChartNoAxesCombined },
+  { id: 'storage', icon: HardDrive },
+  { id: 'email', icon: Mail },
   { id: 'ui-design', icon: Palette },
-  { id: 'web-quality', icon: Gauge },
+  { id: 'testing', icon: FlaskConical },
   { id: 'infrastructure', icon: Server },
-  { id: 'content', icon: FileText },
+  { id: 'documentation', icon: FileText },
   { id: 'learning', icon: BookOpen },
   { id: 'productivity', icon: CheckSquare },
   { id: 'discover', icon: Search },
@@ -49,7 +55,8 @@ type CategoryProps = {
 
 export function CategoryPill({ name, slug, href, resourceCount }: CategoryProps) {
   const pathname = usePathname()
-  const isActive = pathname === href
+  const isActive =
+    pathname === href || pathname.startsWith(`${href}/`)
   const Icon = getIconBySlug({ slug })
 
   return (

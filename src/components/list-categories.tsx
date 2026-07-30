@@ -9,7 +9,7 @@ export async function ListCategories() {
       {categories &&
         categories.length > 0 &&
         categories.map((category) => {
-          const href = `/category/${category.slug}`
+          const href = `/${category.slug}`
           return (
             <CategoryPill
               key={category.id}
