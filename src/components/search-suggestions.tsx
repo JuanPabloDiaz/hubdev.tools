@@ -1,121 +1,36 @@
-import { ClockIcon, HistoryIcon, SparklesIcon } from 'lucide-react'
-
-const SUGGESTIONS_SEARCH = [
-  'books for learning TypeScript',
-  'how to build a blog using Next.js, Tailwind and markdown',
-  'platforms for sending emails'
-]
-
-function SearchSuggestionsAI({
-  searchSuggestionsAI,
-  handleSearch
-}: {
-  searchSuggestionsAI: string[]
-  handleSearch: (term: string) => void
-}) {
-  return (
-    <div className='flex flex-col gap-2 mt-3'>
-      <span className='text-xs font-semibold text-neutral-400'>AI Suggestions</span>
-      <div className='flex flex-col gap-0.5 w-full'>
-        {searchSuggestionsAI.map((suggestion) => (
-          <button
-            aria-label={`Search for ${suggestion}`}
-            key={suggestion}
-            onClick={() => {
-              handleSearch(suggestion)
-            }}
-            className='flex items-center p-2 rounded-md cursor-pointer transition-colors duration-300 hover:bg-light-600/40 text-light-900 dark:hover:bg-neutral-800 dark:text-white'
-          >
-            <SparklesIcon className='mr-2 size-3' />
-            <span>{suggestion}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function SearchHistory({
-  searchHistory,
-  handleSearch
-}: {
-  searchHistory: string[]
-  handleSearch: (term: string) => void
-}) {
-  return (
-    <div className='flex flex-col gap-2'>
-      <span className='text-xs font-semibold text-neutral-400'>Recent Searches</span>
-      <div className='flex flex-col gap-0.5 w-full'>
-        {searchHistory.map((suggestion) => (
-          <button
-            aria-label={`Search for ${suggestion}`}
-            key={suggestion}
-            onClick={() => {
-              handleSearch(suggestion)
-            }}
-            className='flex items-center p-2 rounded-md cursor-pointer transition-colors duration-300 hover:bg-light-600/40 text-light-900 dark:hover:bg-neutral-800 dark:text-white'
-          >
-            <HistoryIcon className='mr-2 size-3' />
-            <span>{suggestion}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function DefaultSuggestions({ handleSearch }: { handleSearch: (term: string) => void }) {
-  return (
-    <div className='flex flex-col gap-2'>
-      <span className='text-xs font-semibold text-neutral-400'>Suggestions</span>
-      <div className='flex flex-col gap-1 w-full'>
-        {SUGGESTIONS_SEARCH.map((suggestion) => (
-          <button
-            aria-label={`Search for ${suggestion}`}
-            key={suggestion}
-            onClick={() => {
-              handleSearch(suggestion)
-            }}
-            className='flex items-center p-2 rounded-md cursor-pointer transition-colors duration-300 hover:bg-light-600/40 text-light-900 dark:hover:bg-neutral-800 dark:text-white'
-          >
-            <ClockIcon className='mr-2 size-3' />
-            <span>{suggestion}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
+import { History } from 'lucide-react'
 
 type SearchSuggestionsProps = {
-  handleSearch: (term: string) => void
-  searchHistory: string[]
-  searchSuggestionsAI: string[]
+  history: string[]
+  onSelect: (value: string) => void
 }
 
-export function SearchSuggestions({
-  handleSearch,
-  searchHistory,
-  searchSuggestionsAI
-}: SearchSuggestionsProps) {
+export function SearchSuggestions({ history, onSelect }: SearchSuggestionsProps) {
+  const recent = history.slice(0, 5)
+
+  if (recent.length === 0) return null
+
   return (
-    <div className='size-full border-t border-light-700 dark:border-t-neutral-700/40 overflow-y-auto p-3.5 hidden group-focus-within:block'>
-      <>
-        {searchHistory.length === 0 && searchSuggestionsAI.length === 0 ? (
-          <DefaultSuggestions handleSearch={handleSearch} />
-        ) : (
-          <>
-            <SearchHistory
-              searchHistory={searchHistory}
-              handleSearch={handleSearch}
-            />
-            <SearchSuggestionsAI
-              searchSuggestionsAI={searchSuggestionsAI}
-              handleSearch={handleSearch}
-            />
-          </>
-        )}
-      </>
+    <div className='absolute left-0 right-0 top-[calc(100%+8px)] max-h-[min(420px,calc(100vh-90px))] overflow-y-auto rounded-xl border border-light-700/70 bg-stone-50/98 p-2 shadow-2xl shadow-black/10 backdrop-blur-xl dark:border-neutral-800 dark:bg-[#151515]/98 dark:shadow-black/40'>
+      <div className='py-1'>
+        <div className='flex items-center gap-1.5 px-2 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500'>
+          <History className='size-3.5' />
+          <span>Recent searches</span>
+        </div>
+        <div className='space-y-0.5'>
+          {recent.map((suggestion) => (
+            <button
+              type='button'
+              key={suggestion}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => onSelect(suggestion)}
+              className='flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm text-light-950 transition-colors hover:bg-light-600/40 dark:text-neutral-200 dark:hover:bg-neutral-800/70'
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

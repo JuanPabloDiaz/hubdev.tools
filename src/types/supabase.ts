@@ -87,6 +87,7 @@ export type Database = {
           image: string
           last_clicked: string
           placeholder: string | null
+          search_vector: unknown
           slug: string
           summary: string
           title: string
@@ -104,6 +105,7 @@ export type Database = {
           image: string
           last_clicked?: string
           placeholder?: string | null
+          search_vector?: unknown
           slug: string
           summary: string
           title: string
@@ -121,6 +123,7 @@ export type Database = {
           image?: string
           last_clicked?: string
           placeholder?: string | null
+          search_vector?: unknown
           slug?: string
           summary?: string
           title?: string
@@ -445,6 +448,20 @@ export type Database = {
           placeholder: string
           summary: string
           brief: string | null
+          title: string
+          url: string
+        }[]
+      }
+      search_resources_text: {
+        Args: { match_count?: number; search_query: string }
+        Returns: {
+          brief: string | null
+          category: string
+          id: string
+          image: string
+          placeholder: string | null
+          rank: number
+          summary: string
           title: string
           url: string
         }[]

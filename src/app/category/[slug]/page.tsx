@@ -9,6 +9,7 @@ import { Hero } from '@/components/hero'
 import { Home } from '@/components/home'
 import { LoadingResources } from '@/components/loading'
 import { SubcategoryFilters } from '@/components/subcategory-filters'
+import { getSearchHref } from '@/utils/search'
 
 export const maxDuration = 60
 
@@ -54,10 +55,14 @@ export default async function Page({
     subcategory?: string
   }>
 }) {
-  const { slug } = await params
+  const [{ slug }, { query, subcategory }] = await Promise.all([params, searchParams])
 
   if (slug === 'all') {
     redirect('/')
+  }
+
+  if (query) {
+    redirect(getSearchHref(query))
   }
 
   const [category, subcategories] = await Promise.all([
@@ -77,8 +82,6 @@ export default async function Page({
     return <ErrorState error='An error occurred. Please try again later.' />
   }
 
-  const { query, subcategory } = await searchParams
-
   return (
     <Container>
       <Hero
@@ -92,10 +95,9 @@ export default async function Page({
       />
       <Suspense
         fallback={<LoadingResources />}
-        key={`${query ?? ''}:${subcategory ?? ''}`}
+        key={subcategory ?? ''}
       >
         <Home
-          query={query}
           slug={slug}
           subcategory={subcategory}
         />

@@ -1,24 +1,18 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { AsteriskIcon, FrownIcon, HeartIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import { inter, plusJakartaSans } from '@/fonts'
+import { getSearchHref } from '@/utils/search'
 
 export function NoResultsSearch() {
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   const { replace } = useRouter()
 
   function handleSearch(term: string) {
-    const params = new URLSearchParams(searchParams)
-    if (term) {
-      params.set('query', term)
-    } else {
-      params.delete('query')
-    }
-    replace(`${pathname}?${params.toString()}`)
+    replace(getSearchHref(term))
   }
 
   return (
@@ -30,7 +24,7 @@ export function NoResultsSearch() {
             No results found in database for
           </h3>
           <p className='mt-1 text-yellow-900 dark:text-yellow-500 text-lg'>
-            {searchParams.get('query')?.toString()}
+            {searchParams.get('q')?.toString() ?? searchParams.get('query')?.toString()}
           </p>
         </div>
       </div>
