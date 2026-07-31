@@ -1,9 +1,6 @@
-import { Suspense } from 'react'
-
 import { listFavorites } from '@/actions/favorites'
 import { ErrorState } from '@/components/error-state'
 import { ResourceItem } from '@/components/list-resource'
-import { SearchInsightCard, SearchInsightSkeleton } from '@/components/search-insight'
 import { SearchResource } from '@/types/search'
 import { TextSearchResult } from '@/services/text-search'
 
@@ -51,13 +48,6 @@ export async function SearchResults({
           {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
         </p>
       </div>
-
-      <Suspense fallback={<SearchInsightSkeleton />}>
-        <SearchInsightCard
-          query={query}
-          resources={resources}
-        />
-      </Suspense>
 
       <SearchResourceGrid
         resources={resources}
@@ -118,7 +108,6 @@ export function SearchResultsSkeleton() {
         <div className='h-3 w-24 animate-pulse rounded bg-neutral-200 dark:bg-neutral-900' />
         <div className='h-9 w-full max-w-xl animate-pulse rounded-lg bg-neutral-200 dark:bg-neutral-900' />
       </div>
-      <SearchInsightSkeleton />
       <div className='grid grid-cols-1 gap-5 py-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
         {Array.from({ length: 10 }, (_, index) => (
           <div
