@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { getPreferredLocale, locales } from '@/i18n/config'
 import { updateClicks } from '@/services/updateClicks'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const resourceLink = searchParams.get('ref')
 

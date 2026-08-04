@@ -41,7 +41,7 @@ export async function getEmbeddings({ input, count }: { input: string; count?: n
     return {
       data: result
     }
-  } catch (error) {
+  } catch {
     return {
       error: 'An error occurred while searching for resources.'
     }

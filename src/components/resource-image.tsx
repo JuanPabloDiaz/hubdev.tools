@@ -24,7 +24,7 @@ export function ResourceImage({
         loading={order < 4 ? 'eager' : 'lazy'}
         src={src}
         fill
-        priority={order === 0}
+        fetchPriority={order === 0 ? 'high' : undefined}
         alt={formatMessage(screenshotTemplate, { title })}
         className='object-contain object-center'
         decoding='async'
