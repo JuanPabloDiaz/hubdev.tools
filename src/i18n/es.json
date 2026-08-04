@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "title": "hubdev.tools - Herramientas y recursos para desarrolladores",
+    "description": "Una gran colección de recursos y herramientas para desarrolladores. Descubre inspiración de UI, libros, cursos, herramientas de testing, iconos y mucho más.",
+    "categories": "Categorías",
+    "search": "Buscar",
+    "searchTitle": "Búsqueda: {query}",
+    "favorites": "Recursos favoritos",
+    "favoritesDescription": "Explora todos los recursos que has marcado como favoritos.",
+    "categoryNotFound": "Categoría no encontrada",
+    "learnMore": "Más información en"
+  },
+  "header": {
+    "home": "Ir a la página de inicio",
+    "repository": "Repositorio de GitHub",
+    "language": "Idioma",
+    "english": "Inglés",
+    "spanish": "Español"
+  },
+  "theme": {
+    "toggle": "Cambiar tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "sidebar": {
+    "favorites": "Favoritos",
+    "discover": "Descubrir",
+    "categories": "Categorías",
+    "count": {
+      "singular": "{count} recurso",
+      "plural": "{count} recursos"
+    }
+  },
+  "dashboard": {
+    "featured": "Destacados",
+    "featuredDescription": "Descubre los recursos más populares.",
+    "featuredInformation": "Información sobre los recursos destacados",
+    "featuredTooltip": "Actualizado cada hora según la interacción de la comunidad",
+    "aiSuggestions": "Sugerencias de IA",
+    "aiSuggestionsDescription": "Recomendaciones personalizadas impulsadas por IA.",
+    "latest": "Lo más reciente",
+    "latestDescription": "Descubre los recursos más nuevos del momento."
+  },
+  "search": {
+    "toolbar": {
+      "label": "Buscar recursos",
+      "placeholder": "Busca herramientas, librerías y recursos…",
+      "clear": "Limpiar búsqueda",
+      "submit": "Buscar",
+      "recent": "Búsquedas recientes",
+      "validation": "Introduce entre 2 y 120 caracteres."
+    },
+    "results": {
+      "label": "Búsqueda global",
+      "title": "Resultados para «{query}»",
+      "resourceSingular": "recurso",
+      "resourcePlural": "recursos"
+    },
+    "empty": {
+      "title": "No se encontraron recursos",
+      "description": "No encontramos una coincidencia textual para «{query}». Prueba con menos palabras o una frase más general."
+    },
+    "invalid": {
+      "title": "Consulta de búsqueda no válida",
+      "description": "Introduce entre {min} y {max} caracteres."
+    },
+    "databaseEmpty": {
+      "title": "No se encontraron resultados en la base de datos para",
+      "suggestions": "Sin embargo, estas sugerencias podrían ayudarte:",
+      "items": [
+        "Cursos para principiantes de JavaScript",
+        "Plataforma de analítica open source",
+        "Librerías open source para animaciones",
+        "Alternativas para almacenar datos en la nube"
+      ]
+    }
+  },
+  "categories": {
+    "filterLabel": "Filtrar recursos por subcategoría",
+    "all": "Todas"
+  },
+  "resources": {
+    "goTo": "Ir al recurso",
+    "screenshot": "Captura de pantalla de {title}",
+    "topMatch": "#1 Mejor coincidencia",
+    "loadMore": "Cargar más recursos",
+    "favoriteAdd": "Añadir a favoritos",
+    "favoriteRemove": "Quitar de favoritos"
+  },
+  "favorites": {
+    "empty": {
+      "title": "No hay favoritos",
+      "description": "Los recursos que marques como favoritos aparecerán aquí. Explora y guarda tus favoritos para acceder rápidamente.",
+      "explore": "Empezar a explorar"
+    },
+    "errors": {
+      "rateLimit": "Demasiadas solicitudes. Inténtalo de nuevo en un minuto.",
+      "maximum": "Has alcanzado el número máximo de favoritos.",
+      "add": "Algo salió mal al añadir el favorito.",
+      "remove": "Algo salió mal al quitar el favorito."
+    }
+  },
+  "submit": {
+    "button": "Enviar",
+    "title": "Enviar un recurso",
+    "description": "Ayúdanos a ampliar nuestra colección de recursos valiosos para desarrolladores. Envía un sitio web, una herramienta o un artículo que te resulte útil.",
+    "websiteUrl": "URL del sitio web",
+    "invalidUrl": "URL no válida.",
+    "duplicate": "Este recurso ya fue enviado o añadido.",
+    "success": "¡Gracias por enviar tu recurso!",
+    "submitting": "Enviando...",
+    "close": "Cerrar"
+  },
+  "errors": {
+    "title": "Error",
+    "generic": "Algo salió mal. Inténtalo de nuevo más tarde."
+  },
+  "notFound": {
+    "description": "La página que buscas no existe o ha sido movida.",
+    "home": "Volver al inicio"
+  }
+}

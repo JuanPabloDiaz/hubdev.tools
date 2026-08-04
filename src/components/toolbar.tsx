@@ -7,9 +7,14 @@ import { toast } from 'sonner'
 import { FormSearch } from '@/components/search-form'
 import { SearchSuggestions } from '@/components/search-suggestions'
 import { getSearchHref, isValidSearchQuery, normalizeSearchQuery } from '@/utils/search'
+import type { SearchToolbarTranslations } from '@/i18n/messages'
+import type { Locale } from '@/i18n/config'
+import { getLocalizedHref, stripLocale } from '@/i18n/routing'
 
 type ToolbarProps = {
+  locale: Locale
   searchHistory: string[]
+  translations: SearchToolbarTranslations
 }
 
 function saveSearch(input: string) {
@@ -25,14 +30,14 @@ function saveSearch(input: string) {
   })
 }
 
-export function Toolbar({ searchHistory }: ToolbarProps) {
+export function Toolbar({ locale, searchHistory, translations }: ToolbarProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const [isPending, startNavigation] = useTransition()
   const [isOpen, setIsOpen] = useState(false)
-  const currentQuery = pathname === '/search' ? (searchParams.get('q') ?? '') : ''
+  const currentQuery = stripLocale(pathname) === '/search' ? (searchParams.get('q') ?? '') : ''
   const [value, setValue] = useState(currentQuery)
 
   useEffect(() => {
@@ -60,7 +65,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
     const query = normalizeSearchQuery(input)
 
     if (!isValidSearchQuery(query)) {
-      toast.error('Enter between 2 and 120 characters.')
+      toast.error(translations.validation)
       return
     }
 
@@ -69,7 +74,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
     inputRef.current?.blur()
 
     startNavigation(() => {
-      router.push(getSearchHref(query))
+      router.push(getLocalizedHref(getSearchHref(query), locale))
     })
 
     saveSearch(query).catch(() => undefined)
@@ -110,6 +115,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
             event.preventDefault()
             navigateToSearch(value)
           }}
+          translations={translations}
         />
       </div>
 
@@ -117,6 +123,7 @@ export function Toolbar({ searchHistory }: ToolbarProps) {
         <SearchSuggestions
           history={searchHistory}
           onSelect={navigateToSearch}
+          recentLabel={translations.recent}
         />
       )}
     </div>

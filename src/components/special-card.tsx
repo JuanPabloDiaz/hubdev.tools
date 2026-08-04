@@ -1,11 +1,11 @@
-'use client'
-
-import { ArrowUpRightIcon, HeartIcon } from 'lucide-react'
+import { ArrowUpRightIcon } from 'lucide-react'
 import { HREF_PREFIX } from '@/constants'
 import { cn } from '@/utils/styles'
 import { inter, plusJakartaSans } from '@/fonts'
-import { useFavorite } from '@/hooks/useFavorite'
 import { ResourceImage } from '@/components/resource-image'
+import { FavoriteButton } from '@/components/favorite-button'
+import type { FavoriteTranslations, ResourceTranslations } from '@/i18n/messages'
+import type { Locale } from '@/i18n/config'
 
 type SpecialCardProps = {
   resource: {
@@ -13,18 +13,26 @@ type SpecialCardProps = {
     name: string
     url: string
     brief: string
-    category: string
+    category?: string
     clicks: number
     image: string
     placeholder: string
     order: number
   }
   isFavorite: boolean
+  locale: Locale
+  resourceTranslations: ResourceTranslations
+  favoriteTranslations: FavoriteTranslations
 }
 
-export function SpecialCard({ resource, isFavorite }: SpecialCardProps) {
+export function SpecialCard({
+  resource,
+  isFavorite,
+  locale,
+  resourceTranslations,
+  favoriteTranslations
+}: SpecialCardProps) {
   const { id, name, url, brief, category, image, placeholder, order } = resource
-  const { handleToggleFavorite, isFav } = useFavorite(isFavorite, id)
 
   return (
     <article
@@ -48,13 +56,16 @@ export function SpecialCard({ resource, isFavorite }: SpecialCardProps) {
           title={name}
           placeholder={placeholder}
           order={order}
+          screenshotTemplate={resourceTranslations.screenshot}
         />
         <div className='flex flex-col gap-1.5'>
           <div className='flex justify-between items-center'>
             <h2 className={cn(plusJakartaSans.className, 'font-semibold text-balance')}>{name}</h2>
-            <span className='text-[10px] font-medium uppercase tracking-widest text-muted-foreground'>
-              {category}
-            </span>
+            {category ? (
+              <span className='text-[10px] font-medium uppercase tracking-widest text-muted-foreground'>
+                {category}
+              </span>
+            ) : null}
           </div>
           <p className={cn(inter.className, 'text-sm text-gray-700 dark:text-link text-pretty')}>
             {brief}
@@ -68,21 +79,19 @@ export function SpecialCard({ resource, isFavorite }: SpecialCardProps) {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <span className={inter.className}>Go to resource</span>
+          <span className={inter.className}>{resourceTranslations.goTo}</span>
           <ArrowUpRightIcon className='size-4 duration-200 group-hover:translate-x-[1.5px] group-hover:opacity-100' />
         </a>
         <div className='flex gap-1.5'>
-          <div
-            className='cursor-pointer'
-            onClick={handleToggleFavorite}
-          >
-            <HeartIcon
-              className={cn(
-                'size-4 mr-2 hover:scale-110 text-light-800 dark:text-red-400 transition-all duration-200',
-                isFav && 'fill-light-800 dark:fill-red-400'
-              )}
-            />
-          </div>
+          <FavoriteButton
+            id={id}
+            isFavorite={isFavorite}
+            locale={locale}
+            translations={favoriteTranslations}
+            addLabel={resourceTranslations.favoriteAdd}
+            removeLabel={resourceTranslations.favoriteRemove}
+            iconClassName='transition-all duration-200'
+          />
         </div>
       </div>
     </article>

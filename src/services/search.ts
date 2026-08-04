@@ -19,10 +19,12 @@ type ResourcesWithCategories = {
   new_categories:
     | {
         name: string
+        name_es: string | null
       }
     | {
         slug: string | null
         name: string
+        name_es: string | null
       }
     | null
 }
@@ -30,10 +32,11 @@ type ResourcesWithCategories = {
 const formatDataWithCategories = ({ resources }: { resources: ResourcesWithCategories[] }) => {
   return resources.map((item) => {
     const { new_categories: categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { name, name_es } = categories ?? {}
     return {
       ...resource,
-      category: name ?? ''
+      category: name ?? '',
+      categoryEs: name_es
     }
   })
 }

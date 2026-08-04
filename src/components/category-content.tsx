@@ -8,13 +8,21 @@ import { Home } from '@/components/home'
 import { LoadingResources } from '@/components/loading'
 import { SubcategoryFilters } from '@/components/subcategory-filters'
 import { getCategoryDetails, getSubcategoriesByCategorySlug } from '@/services/list'
+import type { Locale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
+import { getLocalizedDescription, getLocalizedName } from '@/i18n/taxonomy'
 
 type CategoryContentProps = {
   categorySlug: string
+  locale: Locale
   subcategorySlug?: string
 }
 
-export async function CategoryContent({ categorySlug, subcategorySlug }: CategoryContentProps) {
+export async function CategoryContent({
+  categorySlug,
+  locale,
+  subcategorySlug
+}: CategoryContentProps) {
   const [category, subcategories] = await Promise.all([
     getCategoryDetails({
       slug: categorySlug
@@ -29,7 +37,13 @@ export async function CategoryContent({ categorySlug, subcategorySlug }: Categor
   }
 
   if (!subcategories) {
-    return <ErrorState error='An error occurred. Please try again later.' />
+    const dictionary = await getDictionary(locale)
+    return (
+      <ErrorState
+        title={dictionary.errors.title}
+        error={dictionary.errors.generic}
+      />
+    )
   }
 
   if (
@@ -42,13 +56,17 @@ export async function CategoryContent({ categorySlug, subcategorySlug }: Categor
   return (
     <Container>
       <Hero
-        title={category.name}
-        description={category.description ?? ''}
+        title={getLocalizedName(category, locale)}
+        description={getLocalizedDescription(category, locale)}
       />
       {subcategories.length > 0 ? (
         <SubcategoryFilters
           categorySlug={categorySlug}
-          subcategories={subcategories}
+          locale={locale}
+          subcategories={subcategories.map((subcategory) => ({
+            ...subcategory,
+            name: getLocalizedName(subcategory, locale)
+          }))}
           selectedSubcategory={subcategorySlug}
         />
       ) : null}
@@ -57,6 +75,7 @@ export async function CategoryContent({ categorySlug, subcategorySlug }: Categor
         key={subcategorySlug ?? categorySlug}
       >
         <Home
+          locale={locale}
           slug={categorySlug}
           subcategory={subcategorySlug}
         />

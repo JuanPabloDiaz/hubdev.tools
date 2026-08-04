@@ -24,6 +24,8 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/styles'
 
 import { plusJakartaSans } from '@/fonts'
+import type { SidebarCountTranslations } from '@/i18n/messages'
+import { formatMessage } from '@/i18n/messages'
 
 const categories = [
   { id: 'ai', icon: Sparkles },
@@ -51,12 +53,18 @@ type CategoryProps = {
   slug: string
   href: string
   resourceCount?: number
+  countTranslations?: SidebarCountTranslations
 }
 
-export function CategoryPill({ name, slug, href, resourceCount }: CategoryProps) {
+export function CategoryPill({
+  name,
+  slug,
+  href,
+  resourceCount,
+  countTranslations
+}: CategoryProps) {
   const pathname = usePathname()
-  const isActive =
-    pathname === href || pathname.startsWith(`${href}/`)
+  const isActive = pathname === href || (slug !== 'discover' && pathname.startsWith(`${href}/`))
   const Icon = getIconBySlug({ slug })
 
   return (
@@ -72,10 +80,15 @@ export function CategoryPill({ name, slug, href, resourceCount }: CategoryProps)
     >
       <Icon className='size-4 shrink-0' />
       <span>{name}</span>
-      {resourceCount ? (
+      {resourceCount && countTranslations ? (
         <small
           className='ml-auto pl-3 tabular-nums text-muted-foreground'
-          aria-label={`${resourceCount} resources`}
+          aria-label={formatMessage(
+            resourceCount === 1 ? countTranslations.singular : countTranslations.plural,
+            {
+              count: resourceCount
+            }
+          )}
         >
           {resourceCount}
         </small>

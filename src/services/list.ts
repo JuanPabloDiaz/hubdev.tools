@@ -11,7 +11,8 @@ const resourcesWithCategoryQuery = supabase.from('new_resources').select(`
     brief,
     placeholder, 
     new_categories!new_resources_category_fk(
-      name
+      name,
+      name_es
     )
   `)
 
@@ -36,6 +37,7 @@ export const getCategories = async () => {
       `
       id,
       name,
+      name_es,
       slug,
       emoji,
       new_resources!new_resources_category_fk(count)
@@ -58,7 +60,7 @@ export const getCategories = async () => {
 export const getCategoryDetails = async ({ slug }: { slug: string }) => {
   const { data, error } = await supabase
     .from('new_categories')
-    .select('id, name, slug, description')
+    .select('id, name, name_es, slug, description, description_es')
     .eq('slug', slug)
     .eq('isActive', true)
     .maybeSingle()
@@ -82,6 +84,7 @@ export const getSubcategoriesByCategorySlug = async ({
       `
       id,
       name,
+      name_es,
       slug,
       new_categories!new_subcategories_category_fk!inner(
         slug
@@ -97,9 +100,10 @@ export const getSubcategoriesByCategorySlug = async ({
     return
   }
 
-  return data.map(({ id, name, slug }) => ({
+  return data.map(({ id, name, name_es, slug }) => ({
     id,
     name,
+    name_es,
     slug
   }))
 }
@@ -117,10 +121,13 @@ export const getSubcategoryDetails = async ({
       `
       id,
       name,
+      name_es,
       slug,
       description,
+      description_es,
       new_categories!new_subcategories_category_fk!inner(
         name,
+        name_es,
         slug
       )
     `
@@ -140,8 +147,10 @@ export const getSubcategoryDetails = async ({
   return {
     id: data.id,
     name: data.name,
+    name_es: data.name_es,
     slug: data.slug,
     description: data.description,
+    description_es: data.description_es,
     category: data.new_categories
   }
 }
@@ -154,6 +163,9 @@ export const getTaxonomyPaths = async () => {
       slug,
       new_categories!new_subcategories_category_fk!inner(
         slug
+      ),
+      new_resources!new_resources_subcategory_fk(
+        count
       )
     `
     )
@@ -165,10 +177,16 @@ export const getTaxonomyPaths = async () => {
     return
   }
 
-  return data.map((subcategory) => ({
-    categorySlug: subcategory.new_categories.slug,
-    subcategorySlug: subcategory.slug
-  }))
+  const subcategoriesWithResourceCounts = data as Array<
+    (typeof data)[number] & { new_resources?: Array<{ count: number }> }
+  >
+
+  return subcategoriesWithResourceCounts
+    .filter((subcategory) => (subcategory.new_resources?.[0]?.count ?? 0) > 0)
+    .map((subcategory) => ({
+      categorySlug: subcategory.new_categories.slug,
+      subcategorySlug: subcategory.slug
+    }))
 }
 
 export const getResourcesByCategorySlug = async ({
@@ -196,7 +214,8 @@ export const getResourcesByCategorySlug = async ({
         placeholder,
         new_categories!new_resources_category_fk!inner(
           slug,
-          name
+          name,
+          name_es
         ),
         new_subcategories!new_resources_subcategory_fk!inner(
           slug
@@ -229,7 +248,8 @@ export const getResourcesByCategorySlug = async ({
       placeholder,
       new_categories!new_resources_category_fk!inner(
         slug,
-        name
+        name,
+        name_es
       ),
       new_subcategories!new_resources_subcategory_fk(
         slug

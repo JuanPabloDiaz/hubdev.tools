@@ -5,16 +5,24 @@ import { listFavorites } from '@/actions/favorites'
 import { ErrorState } from '@/components/error-state'
 import { LoadingResources } from '@/components/loading'
 import { SpecialCard } from '@/components/special-card'
+import type { Locale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
 
-async function ListAISuggestions() {
-  const [aiSuggestions, favoriteIds] = await Promise.all([
+async function ListAISuggestions({ locale }: { locale: Locale }) {
+  const [aiSuggestions, favoriteIds, dictionary] = await Promise.all([
     getAISuggestions(),
-    listFavorites()
+    listFavorites(),
+    getDictionary(locale)
   ])
   const { data, error } = aiSuggestions
 
   if (error || !data) {
-    return <ErrorState error='Something went wrong' />
+    return (
+      <ErrorState
+        title={dictionary.errors.title}
+        error={dictionary.errors.generic}
+      />
+    )
   }
 
   if (data.length === 0) {
@@ -23,25 +31,25 @@ async function ListAISuggestions() {
 
   // Convert to Set for O(1) lookups instead of O(n) includes()
   const favoriteIdsSet = new Set(favoriteIds)
+  const favoriteTranslations = dictionary.favorites.errors
 
   return (
     <section>
       <div className='flex flex-col gap-2 mt-8'>
         <h2 className='text-2xl text-balance font-semibold text-light-800 dark:text-primary'>
-          AI Suggestions
+          {dictionary.dashboard.aiSuggestions}
         </h2>
         <p className='text-sm text-pretty max-w-lg text-muted-foreground'>
-          Tailored recommendations powered by AI.
+          {dictionary.dashboard.aiSuggestionsDescription}
         </p>
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-6'>
-        {data.map(({ id, title, url, image, brief, placeholder, category, summary }, index) => (
+        {data.map(({ id, title, url, image, brief, placeholder, summary }, index) => (
           <SpecialCard
             key={id}
             resource={{
               id,
               name: title,
-              category,
               brief: brief ?? summary,
               url,
               image,
@@ -50,6 +58,9 @@ async function ListAISuggestions() {
               clicks: 0
             }}
             isFavorite={favoriteIdsSet.has(id)}
+            locale={locale}
+            resourceTranslations={dictionary.resources}
+            favoriteTranslations={favoriteTranslations}
           />
         ))}
       </div>
@@ -57,10 +68,10 @@ async function ListAISuggestions() {
   )
 }
 
-export function AISuggestionsResources() {
+export function AISuggestionsResources({ locale }: { locale: Locale }) {
   return (
     <Suspense fallback={<LoadingResources />}>
-      <ListAISuggestions />
+      <ListAISuggestions locale={locale} />
     </Suspense>
   )
 }

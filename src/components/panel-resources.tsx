@@ -8,19 +8,33 @@ import { Resource } from '@/types/resource'
 import { NUMBER_OF_GENERATIONS_TO_FETCH } from '@/constants'
 import { ListResource } from '@/components/list-resource'
 import { LoadMore } from '@/components/load-more'
+import type {
+  FavoriteTranslations,
+  NoResultsTranslations,
+  ResourceTranslations
+} from '@/i18n/messages'
+import type { Locale } from '@/i18n/config'
 
 type PanelResourcesProps = {
   resources: Resource[]
   favoritesIds: string[]
   slug?: string
   subcategory?: string
+  locale: Locale
+  resourceTranslations: ResourceTranslations
+  favoriteTranslations: FavoriteTranslations
+  noResultsTranslations: NoResultsTranslations
 }
 
 export function PanelResources({
   resources,
   favoritesIds,
   slug,
-  subcategory
+  subcategory,
+  locale,
+  resourceTranslations,
+  favoriteTranslations,
+  noResultsTranslations
 }: PanelResourcesProps) {
   const isLastRequest = useRef(false)
   const [data, setData] = useState<Resource[]>(resources)
@@ -69,11 +83,16 @@ export function PanelResources({
       <ListResource
         data={data}
         favoritesIds={favoritesIds}
+        locale={locale}
+        resourceTranslations={resourceTranslations}
+        favoriteTranslations={favoriteTranslations}
+        noResultsTranslations={noResultsTranslations}
       />
       {hasResources && (
         <LoadMore
           loadMoreResources={loadMoreResources}
           isLoading={isLoading}
+          label={resourceTranslations.loadMore}
         />
       )}
     </>

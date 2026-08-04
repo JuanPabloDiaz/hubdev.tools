@@ -6,10 +6,12 @@ import { Button } from '@/components/ui/button'
 
 export function LoadMore({
   loadMoreResources,
-  isLoading
+  isLoading,
+  label
 }: {
   loadMoreResources: () => void
   isLoading: boolean
+  label: string
 }) {
   return (
     <Button
@@ -21,7 +23,7 @@ export function LoadMore({
       ) : (
         <ArrowDownToLineIcon className='size-4 mr-2' />
       )}
-      <span className='text-sm'>Load more resources</span>
+      <span className='text-sm'>{label}</span>
     </Button>
   )
 }

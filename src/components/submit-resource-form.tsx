@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import { extractDomain } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -19,16 +19,32 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import type { SubmitTranslations } from '@/i18n/messages'
 
-const formSchema = z.object({
-  url: z.url({
-    message: 'Invalid URL.'
-  })
-})
+type FormValues = {
+  url: string
+}
 
-export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) {
+export function SubmitResourceForm({
+  setOpen,
+  translations,
+  genericError
+}: {
+  setOpen: Dispatch<SetStateAction<boolean>>
+  translations: SubmitTranslations
+  genericError: string
+}) {
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        url: z.url({
+          message: translations.invalidUrl
+        })
+      }),
+    [translations.invalidUrl]
+  )
   const [successMessage, setSuccessMessage] = useState<string>('')
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       url: ''
@@ -41,7 +57,7 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
   } = form
   const hasErrors = Object.keys(errors).length > 0
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: FormValues) => {
     const domain = extractDomain(values.url)
     if (
       isDomainInvalid({
@@ -50,7 +66,7 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
     ) {
       setError('url', {
         type: 'manual',
-        message: 'Invalid URL.'
+        message: translations.invalidUrl
       })
       return
     }
@@ -65,12 +81,12 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
       if (msg !== 'ok') {
         setError('url', {
           type: 'manual',
-          message: 'This resource has already been submitted or added.'
+          message: translations.duplicate
         })
         return
       }
 
-      setSuccessMessage('Thank you for submitting your resource!')
+      setSuccessMessage(translations.success)
       setTimeout(() => {
         setOpen(false)
       }, 2000)
@@ -78,7 +94,7 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
       if (error instanceof Error) {
         setError('root.api', {
           type: 'manual',
-          message: error.message
+          message: genericError
         })
       }
     }
@@ -95,7 +111,7 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
           name='url'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Website URL</FormLabel>
+              <FormLabel>{translations.websiteUrl}</FormLabel>
               <FormControl>
                 <Input
                   placeholder='https://example.com'
@@ -118,7 +134,7 @@ export function SubmitResourceForm({ setOpen }: { setOpen: Dispatch<SetStateActi
           className='w-full'
           disabled={isSubmitting || Boolean(errors?.root?.api)}
         >
-          {!isSubmitting || hasErrors ? 'Submit' : 'Submitting...'}
+          {!isSubmitting || hasErrors ? translations.button : translations.submitting}
         </Button>
       </form>
     </Form>

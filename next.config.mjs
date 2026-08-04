@@ -6,6 +6,16 @@ const nextConfig = {
         source: '/category/:category',
         destination: '/:category',
         permanent: true
+      },
+      {
+        source: '/es/category/:category',
+        destination: '/es/:category',
+        permanent: true
+      },
+      {
+        source: '/en/category/:category',
+        destination: '/en/:category',
+        permanent: true
       }
     ]
   },

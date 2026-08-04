@@ -2,21 +2,29 @@ import { ImageResponse } from 'next/og'
 
 import { APP_URL } from '@/constants'
 import { getCategoryDetails } from '@/services/list'
+import { isLocale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
+import { getLocalizedDescription, getLocalizedName } from '@/i18n/taxonomy'
 
 export default async function Image({
   params
 }: {
-  params: {
+  params: Promise<{
     category: string
-  }
+    locale: string
+  }>
 }) {
   const size = {
     width: 1200,
     height: 630
   }
 
+  const { category, locale } = await params
+  if (!isLocale(locale)) return new Response('Not found', { status: 404 })
+  const dictionary = await getDictionary(locale)
+
   const details = await getCategoryDetails({
-    slug: params.category
+    slug: category
   })
 
   if (!details) {
@@ -32,12 +40,12 @@ export default async function Image({
           fontSize: '5rem'
         }}
       >
-        Category not found
+        {dictionary.metadata.categoryNotFound}
       </div>
     )
   }
 
-  const { name, description } = details
+  const description = getLocalizedDescription(details, locale)
 
   return new ImageResponse(
     <div
@@ -49,16 +57,6 @@ export default async function Image({
         alignItems: 'center'
       }}
     >
-      <div
-        style={{
-          backgroundSize: '70px 70px',
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          top: 0,
-          left: 0
-        }}
-      ></div>
       <div
         style={{
           display: 'flex',
@@ -95,6 +93,16 @@ export default async function Image({
       </div>
       <div
         style={{
+          backgroundColor: 'transparent',
+          backgroundImage: `radial-gradient(ellipse 80% 35% at 65% -25%, rgba(70,100,180,0.2), rgba(255, 255, 255, 0))`,
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: '0'
+        }}
+      ></div>
+      <div
+        style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '10px',
@@ -110,7 +118,7 @@ export default async function Image({
             fontSize: '6rem'
           }}
         >
-          <span>{name}</span>
+          <span>{getLocalizedName(details, locale)}</span>
         </div>
         <p
           style={{
@@ -143,7 +151,7 @@ export default async function Image({
               fontSize: '1.2rem'
             }}
           >
-            Learn more at 👉 {APP_URL}
+            {dictionary.metadata.learnMore} 👉 {APP_URL}
           </p>
         </div>
       </div>

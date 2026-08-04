@@ -20,10 +20,11 @@ export const listResources = async ({
 
   const formattedData = data.map((item) => {
     const { new_categories: categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { name, name_es } = categories ?? {}
     return {
       ...resource,
-      category: name ?? ''
+      category: name ?? '',
+      categoryEs: name_es
     }
   })
   return formattedData
@@ -49,10 +50,11 @@ export const listResourcesBySlug = async ({
   if (!data) return
   const formattedData = data.map((item) => {
     const { new_categories: categories, new_subcategories: _subcategories, ...resource } = item
-    const { name } = categories ?? {}
+    const { name, name_es } = categories ?? {}
     return {
       ...resource,
-      category: name ?? ''
+      category: name ?? '',
+      categoryEs: name_es
     }
   })
 

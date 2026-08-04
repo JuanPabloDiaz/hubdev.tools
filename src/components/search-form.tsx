@@ -2,6 +2,7 @@ import { RefObject } from 'react'
 import { ArrowRight, LoaderCircle, Search, X } from 'lucide-react'
 
 import { MAX_SEARCH_QUERY_LENGTH } from '@/utils/search'
+import type { SearchToolbarTranslations } from '@/i18n/messages'
 
 type FormSearchProps = {
   inputRef: RefObject<HTMLInputElement | null>
@@ -11,6 +12,7 @@ type FormSearchProps = {
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   onValueChange: (value: string) => void
+  translations: Pick<SearchToolbarTranslations, 'label' | 'placeholder' | 'clear' | 'submit'>
   value: string
 }
 
@@ -22,6 +24,7 @@ export function FormSearch({
   onKeyDown,
   onSubmit,
   onValueChange,
+  translations,
   value
 }: FormSearchProps) {
   return (
@@ -38,7 +41,7 @@ export function FormSearch({
         className='sr-only'
         htmlFor='global-search'
       >
-        Search developer tools and resources
+        {translations.label}
       </label>
       <input
         ref={inputRef}
@@ -48,7 +51,7 @@ export function FormSearch({
         autoComplete='off'
         spellCheck='false'
         maxLength={MAX_SEARCH_QUERY_LENGTH}
-        placeholder='Search tools, libraries, and resources…'
+        placeholder={translations.placeholder}
         value={value}
         onChange={(event) => onValueChange(event.target.value)}
         onFocus={onFocus}
@@ -60,7 +63,7 @@ export function FormSearch({
         <button
           type='button'
           onClick={onClear}
-          aria-label='Clear search'
+          aria-label={translations.clear}
           className='grid size-9 shrink-0 place-items-center rounded-lg text-neutral-500 transition-colors hover:bg-light-600/40 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary dark:hover:bg-neutral-800'
         >
           <X
@@ -79,7 +82,7 @@ export function FormSearch({
       <button
         type='submit'
         disabled={isPending || !value.trim()}
-        aria-label='Submit search'
+        aria-label={translations.submit}
         className='grid size-9 shrink-0 place-items-center rounded-lg bg-light-900 text-white shadow-sm transition-all hover:bg-light-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-black dark:hover:bg-neutral-200'
       >
         {isPending ? (

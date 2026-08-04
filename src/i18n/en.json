@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "title": "hubdev.tools - Developer Tools and Resources",
+    "description": "A great collection of resources and tools for developers. Discover UI inspiration, books, courses, testing tools, icons, and much more.",
+    "categories": "Categories",
+    "search": "Search",
+    "searchTitle": "Search: {query}",
+    "favorites": "Favorite Resources",
+    "favoritesDescription": "Explore all the resources you have marked as favorites.",
+    "categoryNotFound": "Category not found",
+    "learnMore": "Learn more at"
+  },
+  "header": {
+    "home": "Go to home page",
+    "repository": "GitHub repository",
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "sidebar": {
+    "favorites": "Favorites",
+    "discover": "Discover",
+    "categories": "Categories",
+    "count": {
+      "singular": "{count} resource",
+      "plural": "{count} resources"
+    }
+  },
+  "dashboard": {
+    "featured": "Featured",
+    "featuredDescription": "Discover the most popular resources.",
+    "featuredInformation": "Information about featured resources",
+    "featuredTooltip": "Updated hourly based on community engagement",
+    "aiSuggestions": "AI Suggestions",
+    "aiSuggestionsDescription": "Tailored recommendations powered by AI.",
+    "latest": "The latest",
+    "latestDescription": "Check out the freshest resources right now."
+  },
+  "search": {
+    "toolbar": {
+      "label": "Search resources",
+      "placeholder": "Search tools, libraries, and resources…",
+      "clear": "Clear search",
+      "submit": "Submit search",
+      "recent": "Recent searches",
+      "validation": "Enter between 2 and 120 characters."
+    },
+    "results": {
+      "label": "Global search",
+      "title": "Results for “{query}”",
+      "resourceSingular": "resource",
+      "resourcePlural": "resources"
+    },
+    "empty": {
+      "title": "No resources found",
+      "description": "We could not find a textual match for “{query}”. Try fewer words or a broader phrase."
+    },
+    "invalid": {
+      "title": "Invalid search query",
+      "description": "Enter between {min} and {max} characters."
+    },
+    "databaseEmpty": {
+      "title": "No results found in database for",
+      "suggestions": "However there are some suggestions that might help:",
+      "items": [
+        "Courses for JavaScript beginners",
+        "Open source analytics platform",
+        "Open source libraries for animations",
+        "Alternatives to store data in the cloud"
+      ]
+    }
+  },
+  "categories": {
+    "filterLabel": "Filter resources by subcategory",
+    "all": "All"
+  },
+  "resources": {
+    "goTo": "Go to resource",
+    "screenshot": "Screenshot of {title}",
+    "topMatch": "#1 Top match",
+    "loadMore": "Load more resources",
+    "favoriteAdd": "Add to favorites",
+    "favoriteRemove": "Remove from favorites"
+  },
+  "favorites": {
+    "empty": {
+      "title": "No favorites found",
+      "description": "Resources you favorite will appear here. Start exploring and save your favorite items to access them quickly.",
+      "explore": "Start exploring"
+    },
+    "errors": {
+      "rateLimit": "Too many requests. Please try again in a minute.",
+      "maximum": "You have reached the maximum number of favorites.",
+      "add": "Something went wrong while adding the favorite.",
+      "remove": "Something went wrong while removing the favorite."
+    }
+  },
+  "submit": {
+    "button": "Submit",
+    "title": "Submit a resource",
+    "description": "Help grow our collection of valuable resources for developers. Submit a website, tool, or article that you find useful.",
+    "websiteUrl": "Website URL",
+    "invalidUrl": "Invalid URL.",
+    "duplicate": "This resource has already been submitted or added.",
+    "success": "Thank you for submitting your resource!",
+    "submitting": "Submitting...",
+    "close": "Close"
+  },
+  "errors": {
+    "title": "Error",
+    "generic": "Something went wrong. Please try again later."
+  },
+  "notFound": {
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "home": "Go back home"
+  }
+}

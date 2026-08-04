@@ -12,24 +12,39 @@ import {
   isValidSearchQuery,
   normalizeSearchQuery
 } from '@/utils/search'
+import { isLocale, type Locale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
+import { formatMessage } from '@/i18n/messages'
+import { getAlternateUrls, getLocalizedHref } from '@/i18n/routing'
 
 export const maxDuration = 60
 
 type SearchPageProps = {
+  params: Promise<{
+    locale: string
+  }>
   searchParams: Promise<{
     q?: string
   }>
 }
 
-export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
-  const { q = '' } = await searchParams
+export async function generateMetadata({
+  params,
+  searchParams
+}: SearchPageProps): Promise<Metadata> {
+  const [{ locale: localeParam }, { q = '' }] = await Promise.all([params, searchParams])
+  if (!isLocale(localeParam)) return {}
+
+  const locale: Locale = localeParam
+  const dictionary = await getDictionary(locale)
   const query = normalizeSearchQuery(q)
+  const pathname = getLocalizedHref('/search', locale)
 
   return {
-    title: query ? `Search: ${query}` : 'Search',
-    alternates: {
-      canonical: '/search'
-    },
+    title: query
+      ? formatMessage(dictionary.metadata.searchTitle, { query })
+      : dictionary.metadata.search,
+    alternates: getAlternateUrls(pathname, locale),
     robots: {
       index: false,
       follow: true
@@ -37,11 +52,15 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   }
 }
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const { q } = await searchParams
+export default async function SearchPage({ params, searchParams }: SearchPageProps) {
+  const [{ locale: localeParam }, { q }] = await Promise.all([params, searchParams])
+  if (!isLocale(localeParam)) return null
+
+  const locale: Locale = localeParam
+  const dictionary = await getDictionary(locale)
 
   if (typeof q !== 'string' || normalizeSearchQuery(q).length === 0) {
-    redirect('/')
+    redirect(getLocalizedHref('/', locale))
   }
 
   const query = normalizeSearchQuery(q)
@@ -50,9 +69,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     return (
       <Container>
         <section className='mx-auto max-w-xl px-4 py-24 text-center'>
-          <h1 className='text-2xl font-semibold tracking-tight'>Invalid search query</h1>
+          <h1 className='text-2xl font-semibold tracking-tight'>
+            {dictionary.search.invalid.title}
+          </h1>
           <p className='mt-2 text-sm leading-6 text-muted-foreground'>
-            Enter between {MIN_SEARCH_QUERY_LENGTH} and {MAX_SEARCH_QUERY_LENGTH} characters.
+            {formatMessage(dictionary.search.invalid.description, {
+              min: MIN_SEARCH_QUERY_LENGTH,
+              max: MAX_SEARCH_QUERY_LENGTH
+            })}
           </p>
         </section>
       </Container>
@@ -72,6 +96,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           query={query}
           searchPromise={searchPromise}
           favoritesPromise={favoritesPromise}
+          locale={locale}
         />
       </Suspense>
     </Container>

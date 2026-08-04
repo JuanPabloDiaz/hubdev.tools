@@ -7,7 +7,7 @@ export function getFeaturedResourcesCached() {
     async () => {
       return getFeaturedResources()
     },
-    ['featured_resources'],
+    ['featured_resources_i18n'],
     {
       revalidate: 3600
     }

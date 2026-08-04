@@ -2,6 +2,9 @@ import Link from 'next/link'
 
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utils/styles'
+import type { Locale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
+import { getLocalizedHref } from '@/i18n/routing'
 
 type Subcategory = {
   id: number
@@ -11,15 +14,18 @@ type Subcategory = {
 
 type SubcategoryFiltersProps = {
   categorySlug: string
+  locale: Locale
   subcategories: Subcategory[]
   selectedSubcategory?: string
 }
 
-export function SubcategoryFilters({
+export async function SubcategoryFilters({
   categorySlug,
+  locale,
   subcategories,
   selectedSubcategory
 }: SubcategoryFiltersProps) {
+  const dictionary = await getDictionary(locale)
   const filterClassName = (isActive: boolean) =>
     cn(
       buttonVariants({
@@ -35,14 +41,14 @@ export function SubcategoryFilters({
     <div
       className='mt-6 flex flex-wrap items-center gap-2'
       role='group'
-      aria-label='Filter resources by subcategory'
+      aria-label={dictionary.categories.filterLabel}
     >
       <Link
-        href={`/${categorySlug}`}
+        href={getLocalizedHref(`/${categorySlug}`, locale)}
         className={filterClassName(!selectedSubcategory)}
         aria-current={!selectedSubcategory ? 'page' : undefined}
       >
-        All
+        {dictionary.categories.all}
       </Link>
 
       {subcategories.map((subcategory) => {
@@ -51,7 +57,7 @@ export function SubcategoryFilters({
         return (
           <Link
             key={subcategory.id}
-            href={`/${categorySlug}/${subcategory.slug}`}
+            href={getLocalizedHref(`/${categorySlug}/${subcategory.slug}`, locale)}
             className={filterClassName(isActive)}
             aria-current={isActive ? 'page' : undefined}
           >

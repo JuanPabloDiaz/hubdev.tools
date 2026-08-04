@@ -1,15 +1,23 @@
 import Image from 'next/image'
 
 import { DEFAULT_BLUR_DATA_URL } from '@/constants'
+import { formatMessage } from '@/i18n/messages'
 
 type ResourceImageProps = {
   src: string
   title: string
   placeholder?: string | null
   order: number
+  screenshotTemplate: string
 }
 
-export function ResourceImage({ src, title, placeholder, order }: ResourceImageProps) {
+export function ResourceImage({
+  src,
+  title,
+  placeholder,
+  order,
+  screenshotTemplate
+}: ResourceImageProps) {
   return (
     <div className='relative aspect-video w-full overflow-hidden rounded-md border bg-neutral-100 dark:bg-neutral-950'>
       <Image
@@ -17,7 +25,7 @@ export function ResourceImage({ src, title, placeholder, order }: ResourceImageP
         src={src}
         fill
         priority={order === 0}
-        alt={`Screenshot of ${title}`}
+        alt={formatMessage(screenshotTemplate, { title })}
         className='object-contain object-center'
         decoding='async'
         placeholder='blur'

@@ -6,5 +6,6 @@ export type Resource = {
   brief: string | null
   image: string
   category: string
+  categoryEs?: string | null
   placeholder: string | null
 }

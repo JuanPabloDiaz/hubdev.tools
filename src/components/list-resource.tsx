@@ -1,6 +1,4 @@
-'use client'
-
-import { ArrowUpRight, HeartIcon } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 import { Resource } from '@/types/resource'
 
@@ -8,9 +6,15 @@ import { inter, plusJakartaSans } from '@/fonts'
 
 import { HREF_PREFIX } from '@/constants'
 import { cn } from '@/utils/styles'
-import { useFavorite } from '@/hooks/useFavorite'
 import { NoResultsSearch } from '@/components/empty-state'
 import { ResourceImage } from '@/components/resource-image'
+import { FavoriteButton } from '@/components/favorite-button'
+import type {
+  FavoriteTranslations,
+  NoResultsTranslations,
+  ResourceTranslations
+} from '@/i18n/messages'
+import type { Locale } from '@/i18n/config'
 
 type ResourceItemProps = {
   id: string
@@ -23,6 +27,9 @@ type ResourceItemProps = {
   placeholder: string | null
   isFavorite: boolean
   rankPosition?: number
+  locale: Locale
+  resourceTranslations: ResourceTranslations
+  favoriteTranslations: FavoriteTranslations
 }
 
 export function ResourceItem({
@@ -35,13 +42,15 @@ export function ResourceItem({
   order,
   placeholder,
   isFavorite,
-  rankPosition
+  rankPosition,
+  locale,
+  resourceTranslations,
+  favoriteTranslations
 }: ResourceItemProps) {
-  const { handleToggleFavorite, isFav } = useFavorite(isFavorite, id)
   const ranking =
     rankPosition && rankPosition <= 3
       ? {
-          label: rankPosition === 1 ? '#1 Top match' : `#${rankPosition}`,
+          label: rankPosition === 1 ? resourceTranslations.topMatch : `#${rankPosition}`,
           styles: {
             1: 'border-amber-300/70 bg-amber-200 text-amber-950 dark:border-amber-400/45 dark:bg-amber-950/85 dark:text-amber-200',
             2: 'border-sky-300/70 bg-sky-100 text-sky-950 dark:border-cyan-400/40 dark:bg-cyan-950/80 dark:text-cyan-200',
@@ -75,6 +84,7 @@ export function ResourceItem({
           title={title}
           placeholder={placeholder}
           order={order}
+          screenshotTemplate={resourceTranslations.screenshot}
         />
         <div className='flex flex-col gap-1.5'>
           <h2
@@ -97,21 +107,18 @@ export function ResourceItem({
           target='_blank'
           rel='noopener noreferrer'
         >
-          <span className={inter.className}>Go to resource</span>
+          <span className={inter.className}>{resourceTranslations.goTo}</span>
           <ArrowUpRight className='size-4 duration-200 group-hover:translate-x-[1.5px] group-hover:opacity-100' />
         </a>
         <div className='flex gap-1.5'>
-          <div
-            className='cursor-pointer'
-            onClick={handleToggleFavorite}
-          >
-            <HeartIcon
-              className={cn(
-                'size-4 mr-2 hover:scale-110 text-light-800 dark:text-red-400',
-                isFav && 'fill-light-800 dark:fill-red-400'
-              )}
-            />
-          </div>
+          <FavoriteButton
+            id={id}
+            isFavorite={isFavorite}
+            locale={locale}
+            translations={favoriteTranslations}
+            addLabel={resourceTranslations.favoriteAdd}
+            removeLabel={resourceTranslations.favoriteRemove}
+          />
         </div>
       </div>
     </article>
@@ -121,9 +128,20 @@ export function ResourceItem({
 type ListResourceProps = {
   data: Resource[]
   favoritesIds: string[]
+  locale: Locale
+  resourceTranslations: ResourceTranslations
+  favoriteTranslations: FavoriteTranslations
+  noResultsTranslations: NoResultsTranslations
 }
 
-export function ListResource({ data, favoritesIds }: ListResourceProps) {
+export function ListResource({
+  data,
+  favoritesIds,
+  locale,
+  resourceTranslations,
+  favoriteTranslations,
+  noResultsTranslations
+}: ListResourceProps) {
   // Convert to Set for O(1) lookups instead of O(n) includes()
   const favoritesIdsSet = new Set(favoritesIds)
 
@@ -144,12 +162,18 @@ export function ListResource({ data, favoritesIds }: ListResourceProps) {
                 placeholder={placeholder}
                 id={id}
                 isFavorite={favoritesIdsSet.has(id)}
+                locale={locale}
+                resourceTranslations={resourceTranslations}
+                favoriteTranslations={favoriteTranslations}
               />
             )
           })}
         </div>
       ) : (
-        <NoResultsSearch />
+        <NoResultsSearch
+          locale={locale}
+          translations={noResultsTranslations}
+        />
       )}
     </>
   )

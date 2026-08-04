@@ -9,10 +9,11 @@ import { supabase } from './client'
 const groq = createGroq()
 
 export const getFeaturedResources = async () => {
-  const { data, error } = await supabase
-    .from('resources')
-    .select(
-      `
+  const [resourcesResult, translationsResult] = await Promise.all([
+    supabase
+      .from('resources')
+      .select(
+        `
     id, 
     title, 
     url, 
@@ -25,23 +26,33 @@ export const getFeaturedResources = async () => {
       name
     )
   `
-    )
-    .order('clicks', {
-      ascending: false
-    })
-    .limit(8)
+      )
+      .order('clicks', { ascending: false })
+      .limit(8),
+    supabase.from('new_categories').select('slug, name_es')
+  ])
+
+  const { data, error } = resourcesResult
 
   if (error) {
     console.error(error)
     return
   }
 
+  if (translationsResult.error) {
+    console.error(translationsResult.error)
+  }
+
+  const translations = new Map(
+    (translationsResult.data ?? []).map((category) => [category.slug, category.name_es])
+  )
+
   const formattedData = data.map((item) => {
-    const { categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { categories: category, ...resource } = item
     return {
       ...resource,
-      category: name ?? ''
+      category: category.name,
+      categoryEs: translations.get(category.slug ?? '') ?? null
     }
   })
 
@@ -83,16 +94,36 @@ export const getAISuggestions = async () => {
     }
   }
 
+  const categoryNames = [...new Set(data.map((resource) => resource.category).filter(Boolean))]
+  const { data: taxonomyRows, error: taxonomyError } = await supabase
+    .from('new_categories')
+    .select('name, name_es')
+    .in('name', categoryNames)
+
+  if (taxonomyError) {
+    console.error(taxonomyError)
+  }
+
+  const categoryTranslations = new Map(
+    (taxonomyRows ?? []).map((category) => [category.name, category.name_es])
+  )
+
   return {
-    data
+    data: data.map((resource) => {
+      return {
+        ...resource,
+        categoryEs: categoryTranslations.get(resource.category) ?? null
+      }
+    })
   }
 }
 
 export const getLatestResources = async () => {
-  const { data, error } = await supabase
-    .from('resources')
-    .select(
-      `
+  const [resourcesResult, translationsResult] = await Promise.all([
+    supabase
+      .from('resources')
+      .select(
+        `
     id, 
     title, 
     url, 
@@ -105,23 +136,33 @@ export const getLatestResources = async () => {
       name
     )
   `
-    )
-    .order('created_at', {
-      ascending: false
-    })
-    .limit(8)
+      )
+      .order('created_at', { ascending: false })
+      .limit(8),
+    supabase.from('new_categories').select('slug, name_es')
+  ])
+
+  const { data, error } = resourcesResult
 
   if (error) {
     console.error(error)
     return
   }
 
+  if (translationsResult.error) {
+    console.error(translationsResult.error)
+  }
+
+  const translations = new Map(
+    (translationsResult.data ?? []).map((category) => [category.slug, category.name_es])
+  )
+
   const formattedData = data.map((item) => {
-    const { categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { categories: category, ...resource } = item
     return {
       ...resource,
-      category: name ?? ''
+      category: category.name,
+      categoryEs: translations.get(category.slug ?? '') ?? null
     }
   })
 
@@ -133,10 +174,11 @@ export const getFavoritesResources = async (ids: string[]) => {
     return []
   }
 
-  const { data, error } = await supabase
-    .from('resources')
-    .select(
-      `
+  const [resourcesResult, translationsResult] = await Promise.all([
+    supabase
+      .from('resources')
+      .select(
+        `
     id, 
     title, 
     url, 
@@ -149,20 +191,32 @@ export const getFavoritesResources = async (ids: string[]) => {
       name
     )
   `
-    )
-    .in('id', ids)
+      )
+      .in('id', ids),
+    supabase.from('new_categories').select('slug, name_es')
+  ])
+
+  const { data, error } = resourcesResult
 
   if (error) {
     console.error(error)
     return []
   }
 
+  if (translationsResult.error) {
+    console.error(translationsResult.error)
+  }
+
+  const translations = new Map(
+    (translationsResult.data ?? []).map((category) => [category.slug, category.name_es])
+  )
+
   const formattedData = data.map((item) => {
-    const { categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { categories: category, ...resource } = item
     return {
       ...resource,
-      category: name ?? ''
+      category: category.name,
+      categoryEs: translations.get(category.slug ?? '') ?? null
     }
   })
 
