@@ -12,7 +12,6 @@ import type { Metadata } from 'next'
 import { isLocale, type Locale } from '@/i18n/config'
 import { getDictionary, type Dictionary } from '@/i18n/dictionaries'
 import { getAlternateUrls, getLocalizedHref } from '@/i18n/routing'
-import { getLocalizedName } from '@/i18n/taxonomy'
 
 type FavoritesPageProps = {
   params: Promise<{
@@ -41,7 +40,7 @@ async function ListFavoritesComp({
   dictionary: Dictionary
 }) {
   const favoriteIds = await listFavorites()
-  const favorites = favoriteIds.length > 0 ? await getFavoritesResources(favoriteIds) : []
+  const favorites = favoriteIds.length > 0 ? await getFavoritesResources(favoriteIds, locale) : []
 
   if (favorites.length === 0) {
     return (
@@ -64,11 +63,8 @@ async function ListFavoritesComp({
           resource={{
             id: resource.id,
             name: resource.title,
-            category: getLocalizedName(
-              { name: resource.category, name_es: resource.categoryEs },
-              locale
-            ),
-            brief: resource.brief ?? resource.summary,
+            category: resource.category,
+            brief: resource.brief,
             url: resource.url,
             image: resource.image,
             placeholder: resource.placeholder ?? '',

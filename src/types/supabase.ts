@@ -41,51 +41,60 @@ export type Database = {
         }
         Relationships: []
       }
+      category_translations: {
+        Row: {
+          category_id: number
+          description: string
+          locale: string
+          title: string
+        }
+        Insert: {
+          category_id: number
+          description: string
+          locale: string
+          title: string
+        }
+        Update: {
+          category_id?: number
+          description?: string
+          locale?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'category_translations_category_id_fkey'
+            columns: ['category_id']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       new_categories: {
         Row: {
-          bg_color: string | null
           created_at: string
-          description: string | null
-          description_es: string | null
-          emoji: string | null
           id: number
           isActive: boolean
-          name: string
-          name_es: string | null
           slug: string
         }
         Insert: {
-          bg_color?: string | null
           created_at?: string
-          description?: string | null
-          description_es?: string | null
-          emoji?: string | null
           id?: never
           isActive?: boolean
-          name: string
-          name_es?: string | null
           slug: string
         }
         Update: {
-          bg_color?: string | null
           created_at?: string
-          description?: string | null
-          description_es?: string | null
-          emoji?: string | null
           id?: never
           isActive?: boolean
-          name?: string
-          name_es?: string | null
           slug?: string
         }
         Relationships: []
       }
       new_resources: {
         Row: {
-          brief: string | null
           clicks: number
           created_at: string
-          description: string
           embedding: string | null
           id: string
           idCategory: number
@@ -93,17 +102,14 @@ export type Database = {
           image: string
           last_clicked: string
           placeholder: string | null
-          search_vector: unknown
           slug: string
           summary: string
           title: string
           url: string
         }
         Insert: {
-          brief?: string | null
           clicks?: number
           created_at?: string
-          description: string
           embedding?: string | null
           id?: string
           idCategory: number
@@ -111,17 +117,14 @@ export type Database = {
           image: string
           last_clicked?: string
           placeholder?: string | null
-          search_vector?: unknown
           slug: string
           summary: string
           title: string
           url: string
         }
         Update: {
-          brief?: string | null
           clicks?: number
           created_at?: string
-          description?: string
           embedding?: string | null
           id?: string
           idCategory?: number
@@ -129,7 +132,6 @@ export type Database = {
           image?: string
           last_clicked?: string
           placeholder?: string | null
-          search_vector?: unknown
           slug?: string
           summary?: string
           title?: string
@@ -162,35 +164,23 @@ export type Database = {
       new_subcategories: {
         Row: {
           created_at: string
-          description: string | null
-          description_es: string | null
           id: number
           idCategory: number
           isActive: boolean
-          name: string
-          name_es: string | null
           slug: string
         }
         Insert: {
           created_at?: string
-          description?: string | null
-          description_es?: string | null
           id?: never
           idCategory: number
           isActive?: boolean
-          name: string
-          name_es?: string | null
           slug: string
         }
         Update: {
           created_at?: string
-          description?: string | null
-          description_es?: string | null
           id?: never
           idCategory?: number
           isActive?: boolean
-          name?: string
-          name_es?: string | null
           slug?: string
         }
         Relationships: [
@@ -199,6 +189,61 @@ export type Database = {
             columns: ['idCategory']
             isOneToOne: false
             referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      resources_translations: {
+        Row: {
+          brief: string
+          description: string
+          locale: string
+          resource_id: string
+        }
+        Insert: {
+          brief: string
+          description: string
+          locale: string
+          resource_id: string
+        }
+        Update: {
+          brief?: string
+          description?: string
+          locale?: string
+          resource_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'resources_translations_resource_id_fkey'
+            columns: ['resource_id']
+            isOneToOne: false
+            referencedRelation: 'new_resources'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      subcategory_translations: {
+        Row: {
+          locale: string
+          subcategory_id: number
+          title: string
+        }
+        Insert: {
+          locale: string
+          subcategory_id: number
+          title: string
+        }
+        Update: {
+          locale?: string
+          subcategory_id?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'subcategory_translations_subcategory_id_fkey'
+            columns: ['subcategory_id']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
             referencedColumns: ['id']
           }
         ]

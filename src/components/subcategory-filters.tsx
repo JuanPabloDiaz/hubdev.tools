@@ -8,7 +8,7 @@ import { getLocalizedHref } from '@/i18n/routing'
 
 type Subcategory = {
   id: number
-  name: string
+  title: string
   slug: string
 }
 
@@ -61,7 +61,7 @@ export async function SubcategoryFilters({
             className={filterClassName(isActive)}
             aria-current={isActive ? 'page' : undefined}
           >
-            {subcategory.name}
+            {subcategory.title}
           </Link>
         )
       })}

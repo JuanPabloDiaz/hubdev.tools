@@ -10,7 +10,6 @@ import { SubcategoryFilters } from '@/components/subcategory-filters'
 import { getCategoryDetails, getSubcategoriesByCategorySlug } from '@/services/list'
 import type { Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
-import { getLocalizedDescription, getLocalizedName } from '@/i18n/taxonomy'
 
 type CategoryContentProps = {
   categorySlug: string
@@ -25,10 +24,12 @@ export async function CategoryContent({
 }: CategoryContentProps) {
   const [category, subcategories] = await Promise.all([
     getCategoryDetails({
-      slug: categorySlug
+      slug: categorySlug,
+      locale
     }),
     getSubcategoriesByCategorySlug({
-      categorySlug
+      categorySlug,
+      locale
     })
   ])
 
@@ -56,17 +57,14 @@ export async function CategoryContent({
   return (
     <Container>
       <Hero
-        title={getLocalizedName(category, locale)}
-        description={getLocalizedDescription(category, locale)}
+        title={category.title}
+        description={category.description}
       />
       {subcategories.length > 0 ? (
         <SubcategoryFilters
           categorySlug={categorySlug}
           locale={locale}
-          subcategories={subcategories.map((subcategory) => ({
-            ...subcategory,
-            name: getLocalizedName(subcategory, locale)
-          }))}
+          subcategories={subcategories}
           selectedSubcategory={subcategorySlug}
         />
       ) : null}

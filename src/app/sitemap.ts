@@ -38,7 +38,7 @@ function sitemapEntries(
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [categories, taxonomyPaths] = await Promise.all([getCategories(), getTaxonomyPaths()])
+  const [categories, taxonomyPaths] = await Promise.all([getCategories('en'), getTaxonomyPaths()])
 
   if (!categories) {
     return sitemapEntries('/', {

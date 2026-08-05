@@ -1,29 +1,31 @@
-import { search } from '@/services/search'
 import { listFavorites } from '@/actions/favorites'
+import { CATALOG_PAGE_SIZE } from '@/constants'
 import { ErrorState } from '@/components/error-state'
 import { PanelResources } from '@/components/panel-resources'
 import type { Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
+import { getResourcesPage } from '@/services/list'
 
 type HomeProps = {
-  query?: string
   locale: Locale
   slug?: string
   subcategory?: string
 }
 
-export async function Home({ locale, query, slug, subcategory }: HomeProps) {
-  const [data, dictionary] = await Promise.all([
-    search({
-      q: query,
-      slug,
-      subcategory
+export async function Home({ locale, slug, subcategory }: HomeProps) {
+  const [page, dictionary, favoritesIds] = await Promise.all([
+    getResourcesPage({
+      locale,
+      offset: 0,
+      limit: CATALOG_PAGE_SIZE,
+      categorySlug: slug,
+      subcategorySlug: subcategory
     }),
-    getDictionary(locale)
+    getDictionary(locale),
+    listFavorites()
   ])
-  // @ts-ignore
-  const { resources, error } = data
-  if (error) {
+
+  if (!page) {
     return (
       <ErrorState
         title={dictionary.errors.title}
@@ -31,14 +33,14 @@ export async function Home({ locale, query, slug, subcategory }: HomeProps) {
       />
     )
   }
-  const favoritesIds = await listFavorites()
 
   return (
     <PanelResources
-      resources={resources}
+      key={`${locale}:${slug ?? 'all'}:${subcategory ?? 'all'}`}
+      resources={page.resources}
       favoritesIds={favoritesIds}
-      slug={slug}
-      subcategory={subcategory}
+      categorySlug={slug}
+      subcategorySlug={subcategory}
       locale={locale}
       resourceTranslations={dictionary.resources}
       favoriteTranslations={dictionary.favorites.errors}

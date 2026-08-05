@@ -4,7 +4,6 @@ import { APP_URL } from '@/constants'
 import { getCategoryDetails } from '@/services/list'
 import { isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
-import { getLocalizedDescription, getLocalizedName } from '@/i18n/taxonomy'
 
 export default async function Image({
   params
@@ -24,7 +23,8 @@ export default async function Image({
   const dictionary = await getDictionary(locale)
 
   const details = await getCategoryDetails({
-    slug: category
+    slug: category,
+    locale
   })
 
   if (!details) {
@@ -45,7 +45,7 @@ export default async function Image({
     )
   }
 
-  const description = getLocalizedDescription(details, locale)
+  const description = details.description
 
   return new ImageResponse(
     <div
@@ -118,7 +118,7 @@ export default async function Image({
             fontSize: '6rem'
           }}
         >
-          <span>{getLocalizedName(details, locale)}</span>
+          <span>{details.title}</span>
         </div>
         <p
           style={{

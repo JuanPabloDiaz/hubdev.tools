@@ -7,7 +7,6 @@ import { getSearchHref } from '@/utils/search'
 import { isLocale, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
 import { getAlternateUrls, getLocalizedHref } from '@/i18n/routing'
-import { getLocalizedDescription, getLocalizedName } from '@/i18n/taxonomy'
 
 export const maxDuration = 60
 
@@ -29,7 +28,8 @@ export async function generateMetadata({ params }: SubcategoryPageProps): Promis
   const locale: Locale = localeParam
   const data = await getSubcategoryDetails({
     categorySlug: category,
-    subcategorySlug: subcategory
+    subcategorySlug: subcategory,
+    locale
   })
 
   if (!data) {
@@ -39,8 +39,8 @@ export async function generateMetadata({ params }: SubcategoryPageProps): Promis
   }
 
   return {
-    title: `${getLocalizedName(data, locale)} – ${getLocalizedName(data.category, locale)}`,
-    description: getLocalizedDescription(data, locale),
+    title: `${data.title} – ${data.category.title}`,
+    description: data.category.description,
     alternates: getAlternateUrls(getLocalizedHref(`/${category}/${subcategory}`, locale), locale)
   }
 }

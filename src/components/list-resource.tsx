@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 
-import { Resource } from '@/types/resource'
+import { CatalogResource } from '@/types/catalog'
 
 import { inter, plusJakartaSans } from '@/fonts'
 
@@ -20,7 +20,7 @@ type ResourceItemProps = {
   id: string
   title: string
   url: string
-  summary: string
+  summary?: string
   brief: string | null
   image: string
   order: number
@@ -96,7 +96,7 @@ export function ResourceItem({
             {title}
           </h2>
           <p className={cn(inter.className, 'text-sm text-gray-700 dark:text-link text-pretty')}>
-            {brief ?? summary}
+            {brief || summary}
           </p>
         </div>
       </div>
@@ -126,7 +126,7 @@ export function ResourceItem({
 }
 
 type ListResourceProps = {
-  data: Resource[]
+  data: CatalogResource[]
   favoritesIds: string[]
   locale: Locale
   resourceTranslations: ResourceTranslations
@@ -149,14 +149,13 @@ export function ListResource({
     <>
       {data && data.length > 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-6'>
-          {data.map(({ id, title, url, summary, image, placeholder, brief }, index) => {
+          {data.map(({ id, title, url, image, placeholder, brief }, index) => {
             return (
               <ResourceItem
                 order={index}
                 key={id}
                 title={title}
                 url={url}
-                summary={summary}
                 brief={brief}
                 image={image}
                 placeholder={placeholder}

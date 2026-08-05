@@ -1,62 +1,42 @@
 'use server'
 
-import { Resource } from '@/types/resource'
+import { CATALOG_PAGE_SIZE } from '@/constants'
+import { isLocale } from '@/i18n/config'
+import { getResourcesPage } from '@/services/list'
+import type { CatalogPage } from '@/types/catalog'
 
-import { getData, getResourcesByCategorySlug } from '@/services/list'
+type ListResourcesPageResult = CatalogPage | { error: string }
 
-export const listResources = async ({
-  from,
-  to
+export async function listResourcesPage({
+  locale,
+  offset,
+  categorySlug,
+  subcategorySlug
 }: {
-  from: number
-  to: number
-}): Promise<Resource[] | undefined> => {
-  const data = await getData({
-    from,
-    to
-  })
-
-  if (!data) return
-
-  const formattedData = data.map((item) => {
-    const { new_categories: categories, ...resource } = item
-    const { name, name_es } = categories ?? {}
+  locale: string
+  offset: number
+  categorySlug?: string
+  subcategorySlug?: string
+}): Promise<ListResourcesPageResult> {
+  if (!isLocale(locale) || !Number.isInteger(offset) || offset < 0) {
     return {
-      ...resource,
-      category: name ?? '',
-      categoryEs: name_es
+      error: 'Invalid catalog pagination parameters.'
     }
-  })
-  return formattedData
-}
+  }
 
-export const listResourcesBySlug = async ({
-  from,
-  to,
-  slug,
-  subcategory
-}: {
-  from: number
-  to: number
-  slug: string
-  subcategory?: string
-}) => {
-  const data = await getResourcesByCategorySlug({
-    from,
-    to,
-    slug,
-    subcategory
+  const page = await getResourcesPage({
+    locale,
+    offset,
+    limit: CATALOG_PAGE_SIZE,
+    categorySlug,
+    subcategorySlug
   })
-  if (!data) return
-  const formattedData = data.map((item) => {
-    const { new_categories: categories, new_subcategories: _subcategories, ...resource } = item
-    const { name, name_es } = categories ?? {}
+
+  if (!page) {
     return {
-      ...resource,
-      category: name ?? '',
-      categoryEs: name_es
+      error: 'Unable to load catalog resources.'
     }
-  })
+  }
 
-  return formattedData
+  return page
 }

@@ -17,6 +17,7 @@ export function LoadMore({
     <Button
       className='mt-2 rounded-full mx-auto flex justify-center'
       onClick={loadMoreResources}
+      disabled={isLoading}
     >
       {isLoading ? (
         <LoaderCircleIcon className='animate-spin size-4 mr-2' />
