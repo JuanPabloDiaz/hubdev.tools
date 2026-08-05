@@ -15,7 +15,7 @@ async function ListLatestResources({
   locale: Locale
   dictionary: Dictionary
 }) {
-  const [data, favoriteIds] = await Promise.all([getLatestResources(), listFavorites()])
+  const [data, favoriteIds] = await Promise.all([getLatestResources(locale), listFavorites()])
 
   if (!data) {
     return (
@@ -32,13 +32,13 @@ async function ListLatestResources({
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-6'>
-      {data.map(({ id, title, url, image, brief, placeholder, summary }, index) => (
+      {data.map(({ id, title, url, image, brief, placeholder }, index) => (
         <SpecialCard
           key={id}
           resource={{
             id,
             name: title,
-            brief: brief ?? summary,
+            brief,
             url,
             image,
             placeholder: placeholder ?? '',

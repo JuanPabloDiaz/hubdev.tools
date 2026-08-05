@@ -17,7 +17,10 @@ export async function ListFeaturedResources({
   locale: Locale
   dictionary: Dictionary
 }) {
-  const [data, favoriteIds] = await Promise.all([getFeaturedResourcesCached(), listFavorites()])
+  const [data, favoriteIds] = await Promise.all([
+    getFeaturedResourcesCached(locale),
+    listFavorites()
+  ])
 
   if (!data) {
     return (
