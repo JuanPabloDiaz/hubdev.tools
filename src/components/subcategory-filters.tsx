@@ -34,7 +34,7 @@ export async function SubcategoryFilters({
       }),
       'rounded-full px-4',
       isActive &&
-        'border-purple-500 bg-purple-500/10 text-purple-700 hover:bg-purple-500/15 hover:text-purple-700 dark:border-purple-300/60 dark:bg-purple-300/10 dark:text-purple-300 dark:hover:bg-purple-300/15 dark:hover:text-purple-300'
+        'border-light-800 bg-light-700/20 text-light-950 hover:bg-light-700/30 hover:text-light-950 dark:border-purple-300/60 dark:bg-purple-300/10 dark:text-purple-300 dark:hover:bg-purple-300/15 dark:hover:text-purple-300'
     )
 
   return (
