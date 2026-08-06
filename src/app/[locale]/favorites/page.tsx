@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 
-import { getFavoritesResources } from '@/services/dashboard'
+import { getFavoritesResources } from '@/services/favorites'
 import { listFavorites } from '@/actions/favorites'
 
 import { Container } from '@/components/container'
@@ -68,8 +68,7 @@ async function ListFavoritesComp({
             url: resource.url,
             image: resource.image,
             placeholder: resource.placeholder ?? '',
-            order: index,
-            clicks: 0
+            order: index
           }}
           isFavorite={true}
           locale={locale}

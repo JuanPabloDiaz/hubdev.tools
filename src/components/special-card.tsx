@@ -14,7 +14,6 @@ type SpecialCardProps = {
     url: string
     brief: string
     category?: string
-    clicks: number
     image: string
     placeholder: string
     order: number
@@ -36,7 +35,7 @@ export function SpecialCard({
 
   return (
     <article
-      className='rounded-lg 
+      className='relative rounded-lg 
         shadow-xs 
         transition-colors 
         duration-300 

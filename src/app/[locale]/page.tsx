@@ -2,8 +2,11 @@ import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
 
 import { Container } from '@/components/container'
-import { Dashboard } from '@/components/dashboard'
-import { isLocale } from '@/i18n/config'
+import { Hero } from '@/components/hero'
+import { Home } from '@/components/home'
+import { LoadingResources } from '@/components/loading'
+import { isLocale, type Locale } from '@/i18n/config'
+import { getDictionary } from '@/i18n/dictionaries'
 import { getLocalizedHref } from '@/i18n/routing'
 import { getSearchHref } from '@/utils/search'
 
@@ -27,10 +30,20 @@ export default async function MainPage({
     redirect(getLocalizedHref(getSearchHref(query), locale))
   }
 
+  const dictionary = await getDictionary(locale)
+  const catalog = dictionary.catalog ?? {
+    title: dictionary.metadata.categories,
+    description: dictionary.metadata.description
+  }
+
   return (
     <Container>
-      <Suspense>
-        <Dashboard locale={locale} />
+      <Hero
+        title={catalog.title}
+        description={catalog.description}
+      />
+      <Suspense fallback={<LoadingResources />}>
+        <Home locale={locale as Locale} />
       </Suspense>
     </Container>
   )

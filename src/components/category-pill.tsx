@@ -14,7 +14,6 @@ import {
   FlaskConical,
   CheckSquare,
   Code2,
-  Search,
   Heart
 } from 'lucide-react'
 
@@ -40,7 +39,6 @@ const categories = [
   { id: 'documentation', icon: FileText },
   { id: 'learning', icon: BookOpen },
   { id: 'productivity', icon: CheckSquare },
-  { id: 'discover', icon: Search },
   { id: 'favorites', icon: Heart }
 ]
 
@@ -64,7 +62,7 @@ export function CategoryPill({
   countTranslations
 }: CategoryProps) {
   const pathname = usePathname()
-  const isActive = pathname === href || (slug !== 'discover' && pathname.startsWith(`${href}/`))
+  const isActive = pathname === href || pathname.startsWith(`${href}/`)
   const Icon = getIconBySlug({ slug })
 
   return (

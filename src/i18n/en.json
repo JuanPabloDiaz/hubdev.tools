@@ -25,20 +25,15 @@
   },
   "sidebar": {
     "favorites": "Favorites",
-    "discover": "Discover",
     "categories": "Categories",
     "count": {
       "singular": "{count} resource",
       "plural": "{count} resources"
     }
   },
-  "dashboard": {
-    "featured": "Featured",
-    "featuredDescription": "Discover the most popular resources.",
-    "featuredInformation": "Information about featured resources",
-    "featuredTooltip": "Updated hourly based on community engagement",
-    "latest": "The latest",
-    "latestDescription": "Check out the freshest resources right now."
+  "catalog": {
+    "title": "All resources",
+    "description": "Explore the complete collection of developer tools and resources."
   },
   "search": {
     "toolbar": {
