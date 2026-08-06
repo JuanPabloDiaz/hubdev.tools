@@ -41,3 +41,6 @@ public/*.onnx
 
 migration.sql
 resources.json
+
+supabase
+data
