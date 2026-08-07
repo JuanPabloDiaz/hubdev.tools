@@ -160,12 +160,14 @@ export function CollectionDetail({
   collectionId,
   locale,
   translations,
-  onClose
+  onClose,
+  onCollectionUpdated
 }: {
   collectionId: string
   locale: Locale
   translations: CollectionsTranslations
   onClose: () => void
+  onCollectionUpdated: (collection: Collection) => void
 }) {
   const [collection, setCollection] = useState<Collection | null>(null)
   const [rows, setRows] = useState<CollectionRow[]>([])
@@ -211,7 +213,11 @@ export function CollectionDetail({
       return
     }
 
-    setCollection(result.collections.find((item) => item.id === collection.id) ?? null)
+    const updatedCollection = result.collections.find((item) => item.id === collection.id)
+    if (!updatedCollection) return
+
+    setCollection(updatedCollection)
+    onCollectionUpdated(updatedCollection)
     setRows((currentRows) =>
       currentRows.filter((row) =>
         row.status === 'available' ? row.resource.id !== resourceId : row.resourceId !== resourceId

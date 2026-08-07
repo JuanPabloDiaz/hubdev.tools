@@ -73,6 +73,14 @@ export function CollectionsOverview({
     if (selectedCollectionId === collectionId) setSelectedCollectionId(null)
   }
 
+  function handleCollectionUpdated(updatedCollection: Collection) {
+    setCollections((currentCollections) =>
+      currentCollections.map((collection) =>
+        collection.id === updatedCollection.id ? updatedCollection : collection
+      )
+    )
+  }
+
   return (
     <div
       className={
@@ -267,6 +275,7 @@ export function CollectionsOverview({
             locale={locale}
             translations={translations}
             onClose={() => setSelectedCollectionId(null)}
+            onCollectionUpdated={handleCollectionUpdated}
           />
         </div>
       ) : null}
