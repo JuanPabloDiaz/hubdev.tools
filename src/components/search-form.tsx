@@ -10,7 +10,7 @@ type FormSearchProps = {
   onClear: () => void
   onFocus: () => void
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  onSubmit: (event: React.SubmitEvent<HTMLFormElement>) => void
   onValueChange: (value: string) => void
   translations: Pick<SearchToolbarTranslations, 'label' | 'placeholder' | 'clear' | 'submit'>
   value: string

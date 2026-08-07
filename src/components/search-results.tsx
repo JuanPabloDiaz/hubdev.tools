@@ -1,4 +1,3 @@
-import { listFavorites } from '@/actions/favorites'
 import { ErrorState } from '@/components/error-state'
 import { ResourceItem } from '@/components/list-resource'
 import { SearchResource } from '@/types/search'
@@ -10,21 +9,11 @@ import { formatMessage } from '@/i18n/messages'
 type SearchResultsProps = {
   query: string
   searchPromise: Promise<TextSearchResult>
-  favoritesPromise: ReturnType<typeof listFavorites>
   locale: Locale
 }
 
-export async function SearchResults({
-  query,
-  searchPromise,
-  favoritesPromise,
-  locale
-}: SearchResultsProps) {
-  const [dictionary, result, favoritesIds] = await Promise.all([
-    getDictionary(locale),
-    searchPromise,
-    favoritesPromise
-  ])
+export async function SearchResults({ query, searchPromise, locale }: SearchResultsProps) {
+  const [dictionary, result] = await Promise.all([getDictionary(locale), searchPromise])
 
   if (result.error) {
     return (
@@ -73,8 +62,6 @@ export async function SearchResults({
 
       <SearchResourceGrid
         resources={resources}
-        favoritesIds={favoritesIds}
-        locale={locale}
         dictionary={dictionary}
       />
     </section>
@@ -83,18 +70,11 @@ export async function SearchResults({
 
 function SearchResourceGrid({
   resources,
-  favoritesIds,
-  locale,
   dictionary
 }: {
   resources: SearchResource[]
-  favoritesIds: string[]
-  locale: Locale
   dictionary: Dictionary
 }) {
-  const favoriteIds = new Set(favoritesIds)
-  const favoriteTranslations = dictionary.favorites.errors
-
   return (
     <div className='grid grid-cols-1 gap-5 py-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
       {resources.map((resource, index) => (
@@ -108,11 +88,9 @@ function SearchResourceGrid({
           image={resource.image}
           placeholder={resource.placeholder}
           order={index}
-          isFavorite={favoriteIds.has(resource.id)}
           rankPosition={resource.rankPosition}
-          locale={locale}
           resourceTranslations={dictionary.resources}
-          favoriteTranslations={favoriteTranslations}
+          collectionTranslations={dictionary.collections}
         />
       ))}
     </div>

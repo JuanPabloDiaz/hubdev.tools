@@ -1,11 +1,10 @@
 import type { Locale } from '@/i18n/config'
+import type { CollectionResource } from '@/types/collection'
 
 import { supabase } from './client'
 
-export async function getFavoritesResources(ids: string[], locale: Locale) {
-  if (ids.length === 0) {
-    return []
-  }
+export async function getCollectionResources(ids: string[], locale: Locale) {
+  if (ids.length === 0) return []
 
   const { data, error } = await supabase
     .from('new_resources')
@@ -32,10 +31,10 @@ export async function getFavoritesResources(ids: string[], locale: Locale) {
 
   if (error) {
     console.error(error)
-    return []
+    return
   }
 
-  return data.map((resource) => {
+  return data.map((resource): CollectionResource => {
     const translation = resource.resources_translations[0]
     const categoryTranslation = resource.new_categories.category_translations[0]
 

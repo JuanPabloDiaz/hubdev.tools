@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import { listFavorites } from '@/actions/favorites'
 import { Container } from '@/components/container'
 import { SearchResults, SearchResultsSkeleton } from '@/components/search-results'
 import { searchResourcesText } from '@/services/text-search'
@@ -84,7 +83,6 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
   }
 
   const searchPromise = searchResourcesText(query)
-  const favoritesPromise = listFavorites()
 
   return (
     <Container>
@@ -95,7 +93,6 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
         <SearchResults
           query={query}
           searchPromise={searchPromise}
-          favoritesPromise={favoritesPromise}
           locale={locale}
         />
       </Suspense>

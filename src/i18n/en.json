@@ -5,8 +5,8 @@
     "categories": "Categories",
     "search": "Search",
     "searchTitle": "Search: {query}",
-    "favorites": "Favorite Resources",
-    "favoritesDescription": "Explore all the resources you have marked as favorites.",
+    "collections": "Collections",
+    "collectionsDescription": "Organize resources into focused collections.",
     "categoryNotFound": "Category not found",
     "learnMore": "Learn more at"
   },
@@ -24,7 +24,7 @@
     "system": "System"
   },
   "sidebar": {
-    "favorites": "Favorites",
+    "collections": "Collections",
     "categories": "Categories",
     "count": {
       "singular": "{count} resource",
@@ -77,21 +77,49 @@
     "goTo": "Go to resource",
     "screenshot": "Screenshot of {title}",
     "topMatch": "#1 Top match",
-    "loadMore": "Load more resources",
-    "favoriteAdd": "Add to favorites",
-    "favoriteRemove": "Remove from favorites"
+    "loadMore": "Load more resources"
   },
-  "favorites": {
-    "empty": {
-      "title": "No favorites found",
-      "description": "Resources you favorite will appear here. Start exploring and save your favorite items to access them quickly.",
-      "explore": "Start exploring"
+  "collections": {
+    "title": "Collections",
+    "description": "Organize resources into focused collections.",
+    "inbox": "Inbox",
+    "importedFavorites": "Imported favorites",
+    "new": "New collection",
+    "create": "Create collection",
+    "view": "View details",
+    "cancel": "Cancel",
+    "nameLabel": "Collection name",
+    "namePlaceholder": "e.g. My SaaS Stack",
+    "limit": "{count}/20 collections",
+    "resourceCountSingular": "{count} resource",
+    "resourceCountPlural": "{count} resources",
+    "popover": {
+      "title": "Save to collections",
+      "create": "Create new collection",
+      "unsaved": "Save to collections",
+      "savedSingular": "Saved to {count} collection",
+      "savedPlural": "Saved to {count} collections"
+    },
+    "delete": {
+      "action": "Delete collection",
+      "question": "Delete this collection? Resources saved elsewhere will not be affected.",
+      "confirm": "Delete"
+    },
+    "detail": {
+      "back": "Back to collections",
+      "emptyTitle": "This collection is empty",
+      "emptyDescription": "Save resources from the catalog using the bookmark button.",
+      "open": "Open resource",
+      "remove": "Remove from collection",
+      "unavailable": "Resource unavailable",
+      "unavailableDescription": "This resource is no longer available in the catalog."
     },
     "errors": {
-      "rateLimit": "Too many requests. Please try again in a minute.",
-      "maximum": "You have reached the maximum number of favorites.",
-      "add": "Something went wrong while adding the favorite.",
-      "remove": "Something went wrong while removing the favorite."
+      "storage": "Collections could not be saved in this browser.",
+      "maximum": "You can create up to 20 collections.",
+      "collectionFull": "This collection already contains 15 resources.",
+      "duplicateName": "A collection with this name already exists.",
+      "notFound": "Collection not found."
     }
   },
   "submit": {

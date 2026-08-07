@@ -8,7 +8,7 @@ import { ListResource } from '@/components/list-resource'
 import { LoadMore } from '@/components/load-more'
 import type { CatalogResource } from '@/types/catalog'
 import type {
-  FavoriteTranslations,
+  CollectionsTranslations,
   NoResultsTranslations,
   ResourceTranslations
 } from '@/i18n/messages'
@@ -16,23 +16,21 @@ import type { Locale } from '@/i18n/config'
 
 type PanelResourcesProps = {
   resources: CatalogResource[]
-  favoritesIds: string[]
   categorySlug?: string
   subcategorySlug?: string
   locale: Locale
   resourceTranslations: ResourceTranslations
-  favoriteTranslations: FavoriteTranslations
+  collectionTranslations: CollectionsTranslations
   noResultsTranslations: NoResultsTranslations
 }
 
 export function PanelResources({
   resources,
-  favoritesIds,
   categorySlug,
   subcategorySlug,
   locale,
   resourceTranslations,
-  favoriteTranslations,
+  collectionTranslations,
   noResultsTranslations
 }: PanelResourcesProps) {
   const isLastRequest = useRef(false)
@@ -71,10 +69,9 @@ export function PanelResources({
     <>
       <ListResource
         data={data}
-        favoritesIds={favoritesIds}
         locale={locale}
         resourceTranslations={resourceTranslations}
-        favoriteTranslations={favoriteTranslations}
+        collectionTranslations={collectionTranslations}
         noResultsTranslations={noResultsTranslations}
       />
       {hasResources && (

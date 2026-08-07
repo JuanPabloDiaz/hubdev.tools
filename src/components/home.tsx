@@ -1,4 +1,3 @@
-import { listFavorites } from '@/actions/favorites'
 import { CATALOG_PAGE_SIZE } from '@/constants'
 import { ErrorState } from '@/components/error-state'
 import { PanelResources } from '@/components/panel-resources'
@@ -13,7 +12,7 @@ type HomeProps = {
 }
 
 export async function Home({ locale, slug, subcategory }: HomeProps) {
-  const [page, dictionary, favoritesIds] = await Promise.all([
+  const [page, dictionary] = await Promise.all([
     getResourcesPage({
       locale,
       offset: 0,
@@ -21,8 +20,7 @@ export async function Home({ locale, slug, subcategory }: HomeProps) {
       categorySlug: slug,
       subcategorySlug: subcategory
     }),
-    getDictionary(locale),
-    listFavorites()
+    getDictionary(locale)
   ])
 
   if (!page) {
@@ -38,12 +36,11 @@ export async function Home({ locale, slug, subcategory }: HomeProps) {
     <PanelResources
       key={`${locale}:${slug ?? 'all'}:${subcategory ?? 'all'}`}
       resources={page.resources}
-      favoritesIds={favoritesIds}
       categorySlug={slug}
       subcategorySlug={subcategory}
       locale={locale}
       resourceTranslations={dictionary.resources}
-      favoriteTranslations={dictionary.favorites.errors}
+      collectionTranslations={dictionary.collections}
       noResultsTranslations={dictionary.search.databaseEmpty}
     />
   )

@@ -5,8 +5,8 @@
     "categories": "Categorías",
     "search": "Buscar",
     "searchTitle": "Búsqueda: {query}",
-    "favorites": "Recursos favoritos",
-    "favoritesDescription": "Explora todos los recursos que has marcado como favoritos.",
+    "collections": "Colecciones",
+    "collectionsDescription": "Organiza recursos en colecciones específicas.",
     "categoryNotFound": "Categoría no encontrada",
     "learnMore": "Más información en"
   },
@@ -24,7 +24,7 @@
     "system": "Sistema"
   },
   "sidebar": {
-    "favorites": "Favoritos",
+    "collections": "Colecciones",
     "categories": "Categorías",
     "count": {
       "singular": "{count} recurso",
@@ -77,21 +77,49 @@
     "goTo": "Ir al recurso",
     "screenshot": "Captura de pantalla de {title}",
     "topMatch": "#1 Mejor coincidencia",
-    "loadMore": "Cargar más recursos",
-    "favoriteAdd": "Añadir a favoritos",
-    "favoriteRemove": "Quitar de favoritos"
+    "loadMore": "Cargar más recursos"
   },
-  "favorites": {
-    "empty": {
-      "title": "No hay favoritos",
-      "description": "Los recursos que marques como favoritos aparecerán aquí. Explora y guarda tus favoritos para acceder rápidamente.",
-      "explore": "Empezar a explorar"
+  "collections": {
+    "title": "Colecciones",
+    "description": "Organiza recursos en colecciones específicas.",
+    "inbox": "Bandeja de entrada",
+    "importedFavorites": "Favoritos importados",
+    "new": "Nueva colección",
+    "create": "Crear colección",
+    "view": "Ver detalle",
+    "cancel": "Cancelar",
+    "nameLabel": "Nombre de la colección",
+    "namePlaceholder": "Ej. Mi stack SaaS",
+    "limit": "{count}/20 colecciones",
+    "resourceCountSingular": "{count} recurso",
+    "resourceCountPlural": "{count} recursos",
+    "popover": {
+      "title": "Guardar en colecciones",
+      "create": "Crear nueva colección",
+      "unsaved": "Guardar en colecciones",
+      "savedSingular": "Guardado en {count} colección",
+      "savedPlural": "Guardado en {count} colecciones"
+    },
+    "delete": {
+      "action": "Eliminar colección",
+      "question": "¿Eliminar esta colección? Los recursos guardados en otras no se verán afectados.",
+      "confirm": "Eliminar"
+    },
+    "detail": {
+      "back": "Volver a colecciones",
+      "emptyTitle": "Esta colección está vacía",
+      "emptyDescription": "Guarda recursos del catálogo usando el botón de marcador.",
+      "open": "Abrir recurso",
+      "remove": "Quitar de la colección",
+      "unavailable": "Recurso no disponible",
+      "unavailableDescription": "Este recurso ya no está disponible en el catálogo."
     },
     "errors": {
-      "rateLimit": "Demasiadas solicitudes. Inténtalo de nuevo en un minuto.",
-      "maximum": "Has alcanzado el número máximo de favoritos.",
-      "add": "Algo salió mal al añadir el favorito.",
-      "remove": "Algo salió mal al quitar el favorito."
+      "storage": "No se pudieron guardar las colecciones en este navegador.",
+      "maximum": "Puedes crear hasta 20 colecciones.",
+      "collectionFull": "Esta colección ya contiene 15 recursos.",
+      "duplicateName": "Ya existe una colección con este nombre.",
+      "notFound": "No se encontró la colección."
     }
   },
   "submit": {

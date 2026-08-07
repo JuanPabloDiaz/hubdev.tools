@@ -14,7 +14,7 @@ import {
   FlaskConical,
   CheckSquare,
   Code2,
-  Heart
+  Bookmark
 } from 'lucide-react'
 
 import Link from 'next/link'
@@ -39,7 +39,7 @@ const categories = [
   { id: 'documentation', icon: FileText },
   { id: 'learning', icon: BookOpen },
   { id: 'productivity', icon: CheckSquare },
-  { id: 'favorites', icon: Heart }
+  { id: 'collections', icon: Bookmark }
 ]
 
 function getIconBySlug({ slug }: { slug: string }) {

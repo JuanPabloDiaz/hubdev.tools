@@ -6,11 +6,11 @@ import { inter, plusJakartaSans } from '@/fonts'
 
 import { HREF_PREFIX } from '@/constants'
 import { cn } from '@/utils/styles'
+import { CollectionBookmarkButton } from '@/components/collection-bookmark-button'
 import { NoResultsSearch } from '@/components/empty-state'
 import { ResourceImage } from '@/components/resource-image'
-import { FavoriteButton } from '@/components/favorite-button'
 import type {
-  FavoriteTranslations,
+  CollectionsTranslations,
   NoResultsTranslations,
   ResourceTranslations
 } from '@/i18n/messages'
@@ -25,11 +25,9 @@ type ResourceItemProps = {
   image: string
   order: number
   placeholder: string | null
-  isFavorite: boolean
   rankPosition?: number
-  locale: Locale
   resourceTranslations: ResourceTranslations
-  favoriteTranslations: FavoriteTranslations
+  collectionTranslations: CollectionsTranslations
 }
 
 export function ResourceItem({
@@ -41,11 +39,9 @@ export function ResourceItem({
   image,
   order,
   placeholder,
-  isFavorite,
   rankPosition,
-  locale,
   resourceTranslations,
-  favoriteTranslations
+  collectionTranslations
 }: ResourceItemProps) {
   const ranking =
     rankPosition && rankPosition <= 3
@@ -111,13 +107,10 @@ export function ResourceItem({
           <ArrowUpRight className='size-4 duration-200 group-hover:translate-x-[1.5px] group-hover:opacity-100' />
         </a>
         <div className='flex gap-1.5'>
-          <FavoriteButton
-            id={id}
-            isFavorite={isFavorite}
-            locale={locale}
-            translations={favoriteTranslations}
-            addLabel={resourceTranslations.favoriteAdd}
-            removeLabel={resourceTranslations.favoriteRemove}
+          <CollectionBookmarkButton
+            resourceId={id}
+            title={title}
+            translations={collectionTranslations}
           />
         </div>
       </div>
@@ -127,24 +120,19 @@ export function ResourceItem({
 
 type ListResourceProps = {
   data: CatalogResource[]
-  favoritesIds: string[]
   locale: Locale
   resourceTranslations: ResourceTranslations
-  favoriteTranslations: FavoriteTranslations
+  collectionTranslations: CollectionsTranslations
   noResultsTranslations: NoResultsTranslations
 }
 
 export function ListResource({
   data,
-  favoritesIds,
   locale,
   resourceTranslations,
-  favoriteTranslations,
+  collectionTranslations,
   noResultsTranslations
 }: ListResourceProps) {
-  // Convert to Set for O(1) lookups instead of O(n) includes()
-  const favoritesIdsSet = new Set(favoritesIds)
-
   return (
     <>
       {data && data.length > 0 ? (
@@ -160,10 +148,8 @@ export function ListResource({
                 image={image}
                 placeholder={placeholder}
                 id={id}
-                isFavorite={favoritesIdsSet.has(id)}
-                locale={locale}
                 resourceTranslations={resourceTranslations}
-                favoriteTranslations={favoriteTranslations}
+                collectionTranslations={collectionTranslations}
               />
             )
           })}

@@ -12,12 +12,12 @@ function OptionHeader({ title }: { title: string }) {
   )
 }
 
-function Favorites({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
+function Collections({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
   return (
     <CategoryPill
-      name={dictionary.sidebar.favorites}
-      slug='favorites'
-      href={getLocalizedHref('/favorites', locale)}
+      name={dictionary.sidebar.collections}
+      slug='collections'
+      href={getLocalizedHref('/collections', locale)}
     />
   )
 }
@@ -26,7 +26,7 @@ export async function SidebarOptions({ locale }: { locale: Locale }) {
   const dictionary = await getDictionary(locale)
   return (
     <div className='flex space-y-1 overflow-y-auto md:flex-col md:overflow-y-visible pt-0 px-0.5 md:px-0'>
-      <Favorites
+      <Collections
         dictionary={dictionary}
         locale={locale}
       />
