@@ -14,6 +14,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import type { SubmitTranslations } from '@/i18n/messages'
+import { plusJakartaSans } from '@/fonts'
 
 const SubmitResourceForm = dynamic(
   () => import('@/components/submit-resource-form').then((module) => module.SubmitResourceForm),
@@ -35,8 +36,12 @@ export function SubmitDialog({
       onOpenChange={setOpen}
     >
       <DialogTrigger asChild>
-        <Button variant='outline'>
-          <SendIcon className='size-4 mr-2' />
+        <Button
+          type='button'
+          variant='ghost'
+          className={`${plusJakartaSans.className} w-full h-auto justify-start font-normal gap-3 rounded-xl hover:bg-light-600/40 hover:text-foreground dark:hover:bg-purple-300/10 dark:hover:text-purple-300 dark:hover:border-purple-300/20`}
+        >
+          <SendIcon className='size-4' />
           <span>{translations.button}</span>
         </Button>
       </DialogTrigger>

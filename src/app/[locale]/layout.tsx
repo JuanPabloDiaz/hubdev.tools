@@ -101,14 +101,16 @@ export default async function RootLayout({ children, params }: LocaleLayoutProps
               <Header
                 locale={locale}
                 homeLabel={dictionary.header.home}
-                repositoryLabel={dictionary.header.repository}
                 languageTranslations={dictionary.header}
                 themeTranslations={dictionary.theme}
-                submitTranslations={dictionary.submit}
-                genericError={dictionary.errors.generic}
               />
               <div className='px-4 py-6 md:px-6 md:py-8'>
-                <Sidebar locale={locale} />
+                <Sidebar
+                  locale={locale}
+                  repositoryLabel={dictionary.header.repository}
+                  submitTranslations={dictionary.submit}
+                  genericError={dictionary.errors.generic}
+                />
                 {children}
                 <AISearch
                   locale={locale}

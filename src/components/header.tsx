@@ -1,32 +1,24 @@
 import Link from 'next/link'
 
-import { GitHubIc } from '@/components/icons'
 import { Logo } from '@/components/logo'
 import { ModeToggle } from '@/components/mode-toggle'
-import { SubmitDialog } from '@/components/submit-dialog'
 import { LanguageSwitch } from '@/components/language-switch'
-import type { LanguageTranslations, SubmitTranslations, ThemeTranslations } from '@/i18n/messages'
+import type { LanguageTranslations, ThemeTranslations } from '@/i18n/messages'
 import type { Locale } from '@/i18n/config'
 import { getLocalizedHref } from '@/i18n/routing'
 
 type HeaderProps = {
   locale: Locale
   homeLabel: string
-  repositoryLabel: string
   languageTranslations: LanguageTranslations
   themeTranslations: ThemeTranslations
-  submitTranslations: SubmitTranslations
-  genericError: string
 }
 
 export function Header({
   locale,
   homeLabel,
-  repositoryLabel,
   languageTranslations,
-  themeTranslations,
-  submitTranslations,
-  genericError
+  themeTranslations
 }: HeaderProps) {
   return (
     <header className='bg-background shadow-xs sticky top-0 z-40'>
@@ -52,19 +44,6 @@ export function Header({
             />
             <div className='hidden sm:contents'>
               <ModeToggle translations={themeTranslations} />
-              <a
-                href='https://github.com/xavimondev/hubdev.tools'
-                target='_blank'
-                className='inline-flex items-center justify-center bg-background hover:bg-accent hover:text-accent-foreground transition-colors duration-200 size-10 rounded-md'
-                rel='noreferrer noopener'
-                aria-label={repositoryLabel}
-              >
-                <GitHubIc className='size-5' />
-              </a>
-              <SubmitDialog
-                translations={submitTranslations}
-                genericError={genericError}
-              />
             </div>
           </div>
         </div>

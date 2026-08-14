@@ -12,7 +12,7 @@
   },
   "header": {
     "home": "Ir a la página de inicio",
-    "repository": "Repositorio de GitHub",
+    "repository": "GitHub",
     "language": "Idioma",
     "english": "Inglés",
     "spanish": "Español"
@@ -123,7 +123,7 @@
     }
   },
   "submit": {
-    "button": "Enviar",
+    "button": "Enviar recurso",
     "title": "Enviar un recurso",
     "description": "Ayúdanos a ampliar nuestra colección de recursos valiosos para desarrolladores. Envía un sitio web, una herramienta o un artículo que te resulte útil.",
     "websiteUrl": "URL del sitio web",

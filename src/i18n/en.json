@@ -12,7 +12,7 @@
   },
   "header": {
     "home": "Go to home page",
-    "repository": "GitHub repository",
+    "repository": "GitHub",
     "language": "Language",
     "english": "English",
     "spanish": "Spanish"
@@ -123,7 +123,7 @@
     }
   },
   "submit": {
-    "button": "Submit",
+    "button": "Submit resource",
     "title": "Submit a resource",
     "description": "Help grow our collection of valuable resources for developers. Submit a website, tool, or article that you find useful.",
     "websiteUrl": "Website URL",
