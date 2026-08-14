@@ -1,4 +1,4 @@
-export const CATALOG_PAGE_SIZE = 11
+export const CATALOG_PAGE_SIZE = 19
 
 export const APP_URL =
   process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://hubdev.tools'

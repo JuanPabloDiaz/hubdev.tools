@@ -90,29 +90,31 @@ export default async function RootLayout({ children, params }: LocaleLayoutProps
         lang={locale}
         suppressHydrationWarning
       >
-        <body className={`flex flex-col min-h-screen px-1 !sm:px-2`}>
+        <body className='flex flex-col min-h-screen px-1 !sm:px-2'>
           <ThemeProvider
             attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
           >
-            <Header
-              locale={locale}
-              homeLabel={dictionary.header.home}
-              repositoryLabel={dictionary.header.repository}
-              languageTranslations={dictionary.header}
-              themeTranslations={dictionary.theme}
-              submitTranslations={dictionary.submit}
-              genericError={dictionary.errors.generic}
-            />
-            <div className='px-4 py-6 md:px-6 md:py-8 max-w-full md:max-w-8xl'>
-              <Sidebar locale={locale} />
-              {children}
-              <AISearch
+            <div className='w-full 2xl:max-w-[1600px] mx-auto'>
+              <Header
                 locale={locale}
-                translations={dictionary.search.toolbar}
+                homeLabel={dictionary.header.home}
+                repositoryLabel={dictionary.header.repository}
+                languageTranslations={dictionary.header}
+                themeTranslations={dictionary.theme}
+                submitTranslations={dictionary.submit}
+                genericError={dictionary.errors.generic}
               />
+              <div className='px-4 py-6 md:px-6 md:py-8'>
+                <Sidebar locale={locale} />
+                {children}
+                <AISearch
+                  locale={locale}
+                  translations={dictionary.search.toolbar}
+                />
+              </div>
             </div>
           </ThemeProvider>
           <Toaster
