@@ -1,4 +1,4 @@
-export const extractDomain = (url: string) => {
+export function extractDomain(url: string) {
   try {
     const parsedUrl = new URL(url)
     let hostname = parsedUrl.hostname
@@ -15,6 +15,6 @@ export const extractDomain = (url: string) => {
   }
 }
 
-export const copyToClipboard = async ({ content }: { content: string }) => {
+export async function copyToClipboard({ content }: { content: string }) {
   if (navigator.clipboard) navigator.clipboard.writeText(content)
 }

@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from '@/utils/supabase-server'
 
-export const updateClicks = async ({ url }: { url: string }) => {
+export async function updateClicks({ url }: { url: string }) {
   const { success, data, message, code } = await verifyUrl({
     url
   })
@@ -19,7 +19,7 @@ export const updateClicks = async ({ url }: { url: string }) => {
   })
 }
 
-const verifyUrl = async ({ url }: { url: string }) => {
+async function verifyUrl({ url }: { url: string }) {
   const supabase = await createSupabaseServerClient()
   const { data, error } = await supabase.from('resources').select('id').eq('url', url).single()
   if (error) {
@@ -46,7 +46,7 @@ const verifyUrl = async ({ url }: { url: string }) => {
   }
 }
 
-const incrementClicks = async ({ id }: { id: string }) => {
+async function incrementClicks({ id }: { id: string }) {
   const supabase = await createSupabaseServerClient()
   const { error } = await supabase.rpc('increment_clicks', {
     resource_id: id

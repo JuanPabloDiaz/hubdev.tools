@@ -4,7 +4,7 @@ type RequestResource = {
   website: string
 }
 
-const addRequest = async ({ request }: { request: RequestResource }) => {
+async function addRequest({ request }: { request: RequestResource }) {
   const supabase = await createSupabaseBrowserClient()
   const { error } = await supabase.from('requests').insert(request)
 
@@ -15,7 +15,7 @@ const addRequest = async ({ request }: { request: RequestResource }) => {
 
 // First off, let's check if the resource is already added on resources table,
 // Otherwise, we'll check whether it's submitted or not on the requests table
-const isAlreadySubmittedOrAdded = async ({ url }: { url: string }) => {
+async function isAlreadySubmittedOrAdded({ url }: { url: string }) {
   const supabase = await createSupabaseBrowserClient()
   const { data, error } = await supabase.from('resources').select('id').eq('url', url)
 
@@ -34,7 +34,7 @@ const isAlreadySubmittedOrAdded = async ({ url }: { url: string }) => {
   return requestData.length === 1
 }
 
-export const submitResource = async ({ formData }: { formData: FormData }) => {
+export async function submitResource({ formData }: { formData: FormData }) {
   const request = {
     website: formData.get('url') as string
   }

@@ -29,7 +29,7 @@ type ResourcesWithCategories = {
     | null
 }
 
-const formatDataWithCategories = ({ resources }: { resources: ResourcesWithCategories[] }) => {
+function formatDataWithCategories({ resources }: { resources: ResourcesWithCategories[] }) {
   return resources.map((item) => {
     const { new_categories: categories, ...resource } = item
     const { name, name_es } = categories ?? {}

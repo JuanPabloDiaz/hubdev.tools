@@ -31,6 +31,6 @@ export const INVALID_DOMAINS = [
   'airbnb.com'
 ]
 
-export const isDomainInvalid = ({ url }: { url: string }) => {
+export function isDomainInvalid({ url }: { url: string }) {
   return Boolean(INVALID_DOMAINS.find((d) => d === url))
 }
