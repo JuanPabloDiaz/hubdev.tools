@@ -510,7 +510,7 @@ export type Database = {
         }[]
       }
       search_resources_text: {
-        Args: { match_count?: number; search_query: string }
+        Args: { display_locale?: string; match_count?: number; search_query: string }
         Returns: {
           brief: string | null
           category: string

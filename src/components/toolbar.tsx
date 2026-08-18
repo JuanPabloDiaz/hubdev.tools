@@ -25,8 +25,7 @@ function saveSearch(input: string) {
     },
     body: JSON.stringify({
       input
-    }),
-    keepalive: true
+    })
   })
 }
 
@@ -61,7 +60,7 @@ export function Toolbar({ locale, searchHistory, translations }: ToolbarProps) {
     return () => window.removeEventListener('keydown', handleShortcut)
   }, [])
 
-  const navigateToSearch = (input: string) => {
+  const navigateToSearch = async (input: string) => {
     const query = normalizeSearchQuery(input)
 
     if (!isValidSearchQuery(query)) {
@@ -77,7 +76,7 @@ export function Toolbar({ locale, searchHistory, translations }: ToolbarProps) {
       router.push(getLocalizedHref(getSearchHref(query), locale))
     })
 
-    saveSearch(query).catch(() => undefined)
+    await saveSearch(query)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

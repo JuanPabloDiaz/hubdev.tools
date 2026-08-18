@@ -82,7 +82,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
     )
   }
 
-  const searchPromise = searchResourcesText(query)
+  const searchPromise = searchResourcesText(query, locale)
 
   return (
     <Container>
