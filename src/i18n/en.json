@@ -94,7 +94,7 @@
   "collections": {
     "title": "Collections",
     "description": "Organize resources into focused collections.",
-    "inbox": "Inbox",
+    "inbox": "Saved",
     "importedFavorites": "Imported favorites",
     "new": "New collection",
     "create": "Create collection",

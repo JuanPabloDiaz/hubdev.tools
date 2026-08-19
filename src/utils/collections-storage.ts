@@ -19,7 +19,7 @@ function createInbox(now: string): Collection {
   return {
     id: crypto.randomUUID(),
     kind: 'inbox',
-    name: 'Inbox',
+    name: 'Saved',
     icon: 'bookmark',
     color: 'violet',
     resourceIds: [],
