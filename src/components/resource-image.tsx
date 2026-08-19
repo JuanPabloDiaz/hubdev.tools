@@ -26,7 +26,7 @@ export function ResourceImage({
         fill
         fetchPriority={order === 0 ? 'high' : undefined}
         alt={formatMessage(screenshotTemplate, { title })}
-        className='object-contain object-center'
+        className='object-cover object-center'
         decoding='async'
         placeholder='blur'
         blurDataURL={placeholder || DEFAULT_BLUR_DATA_URL}
