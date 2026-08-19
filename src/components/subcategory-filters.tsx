@@ -39,13 +39,13 @@ export async function SubcategoryFilters({
 
   return (
     <div
-      className='mt-6 flex flex-wrap items-center gap-2'
+      className='mt-6 flex flex-nowrap items-center gap-2 overflow-x-auto scrollbar-hide'
       role='group'
       aria-label={dictionary.categories.filterLabel}
     >
       <Link
         href={getLocalizedHref(`/${categorySlug}`, locale)}
-        className={filterClassName(!selectedSubcategory)}
+        className={cn(filterClassName(!selectedSubcategory), 'shrink-0')}
         aria-current={!selectedSubcategory ? 'page' : undefined}
       >
         {dictionary.categories.all}
@@ -58,7 +58,7 @@ export async function SubcategoryFilters({
           <Link
             key={subcategory.id}
             href={getLocalizedHref(`/${categorySlug}/${subcategory.slug}`, locale)}
-            className={filterClassName(isActive)}
+            className={cn(filterClassName(isActive), 'shrink-0')}
             aria-current={isActive ? 'page' : undefined}
           >
             {subcategory.title}
