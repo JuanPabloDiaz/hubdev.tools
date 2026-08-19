@@ -113,7 +113,7 @@ function CollectionResourceItem({
           alt=''
           fill
           sizes='64px'
-          className='object-contain'
+          className='object-cover'
           placeholder='blur'
           blurDataURL={resource.placeholder || DEFAULT_BLUR_DATA_URL}
         />
