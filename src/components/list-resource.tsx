@@ -25,7 +25,6 @@ type ResourceItemProps = {
   image: string
   order: number
   placeholder: string | null
-  rankPosition?: number
   resourceTranslations: ResourceTranslations
   collectionTranslations: CollectionsTranslations
 }
@@ -39,41 +38,11 @@ export function ResourceItem({
   image,
   order,
   placeholder,
-  rankPosition,
   resourceTranslations,
   collectionTranslations
 }: ResourceItemProps) {
-  const ranking =
-    rankPosition && rankPosition <= 3
-      ? {
-          label: rankPosition === 1 ? resourceTranslations.topMatch : `#${rankPosition}`,
-          styles: {
-            1: 'border-amber-300/70 bg-amber-200 text-amber-950 dark:border-amber-400/45 dark:bg-amber-950/85 dark:text-amber-200',
-            2: 'border-sky-300/70 bg-sky-100 text-sky-950 dark:border-cyan-400/40 dark:bg-cyan-950/80 dark:text-cyan-200',
-            3: 'border-violet-300/70 bg-violet-100 text-violet-950 dark:border-fuchsia-400/40 dark:bg-fuchsia-950/75 dark:text-fuchsia-200'
-          }[rankPosition]
-        }
-      : undefined
-
   return (
-    <article
-      className={cn(
-        'relative rounded-lg shadow-xs border transition-colors duration-300 ease-in-out resource-item grid grid-rows-subgrid row-span-2 gap-3 p-2.5 border-light-600/70 bg-light-600/20 hover:bg-light-600/70 dark:border-neutral-800/70 dark:bg-[#101010] dark:hover:bg-[#191919]',
-        rankPosition === 1 && 'border-amber-400/50 dark:border-amber-400/35',
-        rankPosition === 2 && 'border-sky-400/40 dark:border-cyan-400/30',
-        rankPosition === 3 && 'border-violet-400/40 dark:border-fuchsia-400/30'
-      )}
-    >
-      {ranking && (
-        <span
-          className={cn(
-            'absolute left-4 top-4 z-10 rounded-full border px-2 py-1 text-[11px] font-semibold shadow-sm backdrop-blur-sm',
-            ranking.styles
-          )}
-        >
-          {ranking.label}
-        </span>
-      )}
+    <article className='relative rounded-lg shadow-xs border transition-colors duration-300 ease-in-out resource-item grid grid-rows-subgrid row-span-2 gap-3 p-2.5 border-light-600/70 bg-light-600/20 hover:bg-light-600/70 dark:border-neutral-800/70 dark:bg-[#101010] dark:hover:bg-[#191919]'>
       <div className='flex flex-col gap-3'>
         <ResourceImage
           src={image}

@@ -15,7 +15,7 @@ export function SidebarFooter({
   genericError
 }: SidebarFooterProps) {
   return (
-    <div className='flex flex-col mt-2 pt-2 border-t border-light-700/60 dark:border-neutral-800'>
+    <div className='hidden md:flex flex-col mt-2 pt-2 border-t border-light-700/60 dark:border-neutral-800'>
       <a
         href='https://github.com/xavimondev/hubdev.tools'
         target='_blank'

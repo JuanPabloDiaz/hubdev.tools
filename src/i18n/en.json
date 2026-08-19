@@ -76,7 +76,6 @@
   "resources": {
     "goTo": "Go to resource",
     "screenshot": "Screenshot of {title}",
-    "topMatch": "#1 Top match",
     "loadMore": "Load more resources"
   },
   "collections": {

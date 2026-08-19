@@ -1,14 +1,14 @@
 import { cache } from 'react'
 
 import type { Locale } from '@/i18n/config'
-import { SearchResource } from '@/types/search'
 
 import { supabase } from '@/services/client'
 import { isValidSearchQuery, normalizeSearchQuery } from '@/utils/search'
+import { Resource } from '@/types/resource'
 
 export type TextSearchResult =
   | {
-      resources: SearchResource[]
+      resources: Resource[]
       error?: never
     }
   | {
@@ -42,10 +42,7 @@ export const searchResourcesText = cache(
     }
 
     return {
-      resources: (data ?? []).map((resource, index) => ({
-        ...resource,
-        rankPosition: index + 1
-      }))
+      resources: data ?? []
     }
   }
 )

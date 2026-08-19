@@ -76,7 +76,6 @@
   "resources": {
     "goTo": "Ir al recurso",
     "screenshot": "Captura de pantalla de {title}",
-    "topMatch": "#1 Mejor coincidencia",
     "loadMore": "Cargar más recursos"
   },
   "collections": {

@@ -34,15 +34,15 @@ export function Header({
             <span className='hidden md:block text-sm md:text-base'>hubdev</span>
           </Link>
           <div className='flex items-center gap-2'>
-            <LanguageSwitch
-              locale={locale}
-              translations={{
-                language: languageTranslations.language,
-                english: languageTranslations.english,
-                spanish: languageTranslations.spanish
-              }}
-            />
             <div className='hidden sm:contents'>
+              <LanguageSwitch
+                locale={locale}
+                translations={{
+                  language: languageTranslations.language,
+                  english: languageTranslations.english,
+                  spanish: languageTranslations.spanish
+                }}
+              />
               <ModeToggle translations={themeTranslations} />
             </div>
           </div>

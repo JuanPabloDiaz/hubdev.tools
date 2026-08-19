@@ -1,10 +1,10 @@
 import { ErrorState } from '@/components/error-state'
 import { ResourceItem } from '@/components/list-resource'
-import { SearchResource } from '@/types/search'
 import { TextSearchResult } from '@/services/text-search'
 import type { Locale } from '@/i18n/config'
 import { getDictionary, type Dictionary } from '@/i18n/dictionaries'
 import { formatMessage } from '@/i18n/messages'
+import { Resource } from '@/types/resource'
 
 type SearchResultsProps = {
   query: string
@@ -72,7 +72,7 @@ function SearchResourceGrid({
   resources,
   dictionary
 }: {
-  resources: SearchResource[]
+  resources: Resource[]
   dictionary: Dictionary
 }) {
   return (
@@ -88,7 +88,6 @@ function SearchResourceGrid({
           image={resource.image}
           placeholder={resource.placeholder}
           order={index}
-          rankPosition={resource.rankPosition}
           resourceTranslations={dictionary.resources}
           collectionTranslations={dictionary.collections}
         />
