@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 
-import { listResourcesPage } from '@/actions/resources'
+import type { FetchResourcesPageAction } from '@/actions/resources'
 import { CATALOG_PAGE_SIZE } from '@/constants'
 import { ListResource } from '@/components/list-resource'
 import { LoadMore } from '@/components/load-more'
@@ -22,6 +22,7 @@ type PanelResourcesProps = {
   resourceTranslations: ResourceTranslations
   collectionTranslations: CollectionsTranslations
   noResultsTranslations: NoResultsTranslations
+  fetchAction: FetchResourcesPageAction
 }
 
 export function PanelResources({
@@ -31,7 +32,8 @@ export function PanelResources({
   locale,
   resourceTranslations,
   collectionTranslations,
-  noResultsTranslations
+  noResultsTranslations,
+  fetchAction
 }: PanelResourcesProps) {
   const isLastRequest = useRef(false)
   const [data, setData] = useState<CatalogResource[]>(resources)
@@ -43,12 +45,7 @@ export function PanelResources({
 
     setIsLoading(true)
 
-    const result = await listResourcesPage({
-      locale,
-      offset: data.length,
-      categorySlug,
-      subcategorySlug
-    })
+    const result = await fetchAction({ locale, offset: data.length, categorySlug, subcategorySlug })
 
     setIsLoading(false)
 

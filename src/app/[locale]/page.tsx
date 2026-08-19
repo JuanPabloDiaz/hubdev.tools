@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 
 import { Container } from '@/components/container'
 import { Hero } from '@/components/hero'
-import { Home } from '@/components/home'
+import { HomeLanding } from '@/components/home-landing'
 import { LoadingResources } from '@/components/loading'
 import { isLocale, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n/dictionaries'
@@ -31,19 +31,15 @@ export default async function MainPage({
   }
 
   const dictionary = await getDictionary(locale)
-  const catalog = dictionary.catalog ?? {
-    title: dictionary.metadata.categories,
-    description: dictionary.metadata.description
-  }
 
   return (
     <Container>
       <Hero
-        title={catalog.title}
-        description={catalog.description}
+        title={dictionary.home.hero.title}
+        description={dictionary.home.hero.description}
       />
       <Suspense fallback={<LoadingResources />}>
-        <Home locale={locale as Locale} />
+        <HomeLanding locale={locale as Locale} />
       </Suspense>
     </Container>
   )

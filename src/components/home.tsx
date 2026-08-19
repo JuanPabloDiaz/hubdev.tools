@@ -1,3 +1,4 @@
+import { listResourcesPage } from '@/actions/resources'
 import { CATALOG_PAGE_SIZE } from '@/constants'
 import { ErrorState } from '@/components/error-state'
 import { PanelResources } from '@/components/panel-resources'
@@ -12,7 +13,7 @@ type HomeProps = {
 }
 
 export async function Home({ locale, slug, subcategory }: HomeProps) {
-  const [page, dictionary] = await Promise.all([
+  const [resources, dictionary] = await Promise.all([
     getResourcesPage({
       locale,
       offset: 0,
@@ -23,7 +24,7 @@ export async function Home({ locale, slug, subcategory }: HomeProps) {
     getDictionary(locale)
   ])
 
-  if (!page) {
+  if (!resources) {
     return (
       <ErrorState
         title={dictionary.errors.title}
@@ -35,13 +36,14 @@ export async function Home({ locale, slug, subcategory }: HomeProps) {
   return (
     <PanelResources
       key={`${locale}:${slug ?? 'all'}:${subcategory ?? 'all'}`}
-      resources={page.resources}
+      resources={resources}
       categorySlug={slug}
       subcategorySlug={subcategory}
       locale={locale}
       resourceTranslations={dictionary.resources}
       collectionTranslations={dictionary.collections}
       noResultsTranslations={dictionary.search.databaseEmpty}
+      fetchAction={listResourcesPage}
     />
   )
 }

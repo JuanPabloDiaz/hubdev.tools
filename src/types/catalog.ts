@@ -7,11 +7,6 @@ export type CatalogResource = {
   brief: string
 }
 
-export type CatalogPage = {
-  resources: CatalogResource[]
-  hasMore: boolean
-}
-
 export type LocalizedCategory = {
   id: number
   slug: string

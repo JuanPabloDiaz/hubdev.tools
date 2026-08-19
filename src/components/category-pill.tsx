@@ -7,6 +7,7 @@ import {
   Database,
   ChartNoAxesCombined,
   HardDrive,
+  Home,
   Mail,
   Server,
   Shapes,
@@ -27,6 +28,7 @@ import type { SidebarCountTranslations } from '@/i18n/messages'
 import { formatMessage } from '@/i18n/messages'
 
 const categories = [
+  { id: 'home', icon: Home },
   { id: 'ai', icon: Sparkles },
   { id: 'development', icon: Code2 },
   { id: 'database', icon: Database },

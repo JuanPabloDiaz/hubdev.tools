@@ -8,7 +8,8 @@
     "collections": "Collections",
     "collectionsDescription": "Organize resources into focused collections.",
     "categoryNotFound": "Category not found",
-    "learnMore": "Learn more at"
+    "learnMore": "Learn more at",
+    "recent": "Recently added"
   },
   "header": {
     "home": "Go to home page",
@@ -24,6 +25,7 @@
     "system": "System"
   },
   "sidebar": {
+    "home": "Home",
     "collections": "Collections",
     "categories": "Categories",
     "count": {
@@ -31,9 +33,20 @@
       "plural": "{count} resources"
     }
   },
-  "catalog": {
-    "title": "All resources",
-    "description": "Explore the complete collection of developer tools and resources."
+  "home": {
+    "hero": {
+      "title": "Developer tools",
+      "description": "Discover what's new and what the community reaches for most."
+    },
+    "topRanked": {
+      "title": "Top ranked",
+      "description": "Most clicked this month"
+    },
+    "recent": {
+      "title": "Recently added",
+      "description": "Freshly listed by the community",
+      "viewAll": "View all"
+    }
   },
   "search": {
     "toolbar": {

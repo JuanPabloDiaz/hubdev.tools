@@ -2,29 +2,35 @@
 
 import { CATALOG_PAGE_SIZE } from '@/constants'
 import { isLocale } from '@/i18n/config'
-import { getResourcesPage } from '@/services/list'
-import type { CatalogPage } from '@/types/catalog'
+import { getRecentResourcesPage, getResourcesPage } from '@/services/list'
+import type { CatalogResource } from '@/types/catalog'
 
-type ListResourcesPageResult = CatalogPage | { error: string }
+export type ListResourcesPageResult = { resources: CatalogResource[] } | { error: string }
+
+export type FetchResourcesPageParams = {
+  locale: string
+  offset: number
+  categorySlug?: string
+  subcategorySlug?: string
+}
+
+export type FetchResourcesPageAction = (
+  params: FetchResourcesPageParams
+) => Promise<ListResourcesPageResult>
 
 export async function listResourcesPage({
   locale,
   offset,
   categorySlug,
   subcategorySlug
-}: {
-  locale: string
-  offset: number
-  categorySlug?: string
-  subcategorySlug?: string
-}): Promise<ListResourcesPageResult> {
+}: FetchResourcesPageParams): Promise<ListResourcesPageResult> {
   if (!isLocale(locale) || !Number.isInteger(offset) || offset < 0) {
     return {
       error: 'Invalid catalog pagination parameters.'
     }
   }
 
-  const page = await getResourcesPage({
+  const resources = await getResourcesPage({
     locale,
     offset,
     limit: CATALOG_PAGE_SIZE,
@@ -32,11 +38,36 @@ export async function listResourcesPage({
     subcategorySlug
   })
 
-  if (!page) {
+  if (!resources) {
     return {
       error: 'Unable to load catalog resources.'
     }
   }
 
-  return page
+  return { resources }
+}
+
+export async function listRecentResourcesPage({
+  locale,
+  offset
+}: FetchResourcesPageParams): Promise<ListResourcesPageResult> {
+  if (!isLocale(locale) || !Number.isInteger(offset) || offset < 0) {
+    return {
+      error: 'Invalid catalog pagination parameters.'
+    }
+  }
+
+  const resources = await getRecentResourcesPage({
+    locale,
+    offset,
+    limit: CATALOG_PAGE_SIZE
+  })
+
+  if (!resources) {
+    return {
+      error: 'Unable to load catalog resources.'
+    }
+  }
+
+  return { resources }
 }

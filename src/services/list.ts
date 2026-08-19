@@ -1,12 +1,27 @@
 import type { Locale } from '@/i18n/config'
-import type {
-  CatalogPage,
-  CatalogResource,
-  LocalizedCategory,
-  LocalizedSubcategory
-} from '@/types/catalog'
+import type { CatalogResource, LocalizedCategory, LocalizedSubcategory } from '@/types/catalog'
 
 import { supabase } from './client'
+
+function mapCatalogResource(resource: {
+  id: string
+  title: string
+  url: string
+  image: string
+  placeholder: string | null
+  resources_translations: { brief: string }[]
+}): CatalogResource {
+  const [translation] = resource.resources_translations
+
+  return {
+    id: resource.id,
+    title: resource.title,
+    url: resource.url,
+    image: resource.image,
+    placeholder: resource.placeholder,
+    brief: translation.brief
+  }
+}
 
 type ResourcesPageOptions = {
   locale: Locale
@@ -22,7 +37,7 @@ export async function getResourcesPage({
   limit,
   categorySlug,
   subcategorySlug
-}: ResourcesPageOptions): Promise<CatalogPage | undefined> {
+}: ResourcesPageOptions): Promise<CatalogResource[] | undefined> {
   let query = supabase
     .from('new_resources')
     .select(
@@ -55,6 +70,7 @@ export async function getResourcesPage({
 
   const { data, error } = await query
     .order('title', { ascending: true })
+    .order('id', { ascending: true })
     .range(offset, offset + limit)
 
   if (error) {
@@ -62,23 +78,108 @@ export async function getResourcesPage({
     return
   }
 
-  const resources: CatalogResource[] = data.map((resource) => {
-    const [translation] = resource.resources_translations
+  return data.map(mapCatalogResource)
+}
 
-    return {
-      id: resource.id,
-      title: resource.title,
-      url: resource.url,
-      image: resource.image,
-      placeholder: resource.placeholder,
-      brief: translation.brief
-    }
-  })
+export async function getTopRankedResources({
+  locale,
+  limit
+}: {
+  locale: Locale
+  limit: number
+}): Promise<CatalogResource[] | undefined> {
+  const { data, error } = await supabase
+    .from('new_resources')
+    .select(
+      `
+      id,
+      title,
+      url,
+      image,
+      placeholder,
+      resources_translations!inner(
+        brief
+      )
+    `
+    )
+    .eq('resources_translations.locale', locale)
+    .order('clicks', { ascending: false })
+    .limit(limit)
 
-  return {
-    resources,
-    hasMore: data.length > limit
+  if (error) {
+    console.error(error)
+    return
   }
+
+  return data.map(mapCatalogResource)
+}
+
+export async function getRecentResources({
+  locale,
+  limit
+}: {
+  locale: Locale
+  limit: number
+}): Promise<CatalogResource[] | undefined> {
+  const { data, error } = await supabase
+    .from('new_resources')
+    .select(
+      `
+      id,
+      title,
+      url,
+      image,
+      placeholder,
+      resources_translations!inner(
+        brief
+      )
+    `
+    )
+    .eq('resources_translations.locale', locale)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  return data.map(mapCatalogResource)
+}
+
+export async function getRecentResourcesPage({
+  locale,
+  offset,
+  limit
+}: {
+  locale: Locale
+  offset: number
+  limit: number
+}): Promise<CatalogResource[] | undefined> {
+  const { data, error } = await supabase
+    .from('new_resources')
+    .select(
+      `
+      id,
+      title,
+      url,
+      image,
+      placeholder,
+      resources_translations!inner(
+        brief
+      )
+    `
+    )
+    .eq('resources_translations.locale', locale)
+    .order('created_at', { ascending: false })
+    .range(offset, offset + limit)
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  return data.map(mapCatalogResource)
 }
 
 export async function getCategories(locale: Locale) {
@@ -292,13 +393,13 @@ export async function getTaxonomyPaths() {
 
 // Compatibility for the untouched legacy search service.
 export async function getData({ from, to }: { from: number; to: number }) {
-  const page = await getResourcesPage({
+  const resources = await getResourcesPage({
     locale: 'en',
     offset: from,
     limit: to - from + 1
   })
 
-  return page?.resources.map((resource) => ({
+  return resources?.map((resource) => ({
     ...resource,
     summary: resource.brief,
     new_categories: {
@@ -320,7 +421,7 @@ export async function getResourcesByCategorySlug({
   slug: string
   subcategory?: string
 }) {
-  const page = await getResourcesPage({
+  const resources = await getResourcesPage({
     locale: 'en',
     offset: from,
     limit: to - from + 1,
@@ -328,7 +429,7 @@ export async function getResourcesByCategorySlug({
     subcategorySlug: subcategory
   })
 
-  return page?.resources.map((resource) => ({
+  return resources?.map((resource) => ({
     ...resource,
     summary: resource.brief,
     new_categories: {
