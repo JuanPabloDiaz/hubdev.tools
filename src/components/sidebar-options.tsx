@@ -18,6 +18,7 @@ function HomeNav({ dictionary, locale }: { dictionary: Dictionary; locale: Local
       name={dictionary.sidebar.home}
       slug='home'
       href={getLocalizedHref('/', locale)}
+      exact
     />
   )
 }

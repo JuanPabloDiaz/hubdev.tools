@@ -54,6 +54,7 @@ type CategoryProps = {
   href: string
   resourceCount?: number
   countTranslations?: SidebarCountTranslations
+  exact?: boolean
 }
 
 export function CategoryPill({
@@ -61,10 +62,11 @@ export function CategoryPill({
   slug,
   href,
   resourceCount,
-  countTranslations
+  countTranslations,
+  exact = false
 }: CategoryProps) {
   const pathname = usePathname()
-  const isActive = pathname === href || pathname.startsWith(`${href}/`)
+  const isActive = pathname === href || (!exact && pathname.startsWith(`${href}/`))
   const Icon = getIconBySlug({ slug })
 
   return (
