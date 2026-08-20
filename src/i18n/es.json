@@ -34,10 +34,6 @@
     }
   },
   "home": {
-    "hero": {
-      "title": "Herramientas para developers",
-      "description": "Descubre lo nuevo y lo que la comunidad más utiliza."
-    },
     "topRanked": {
       "title": "Mejor rankeados",
       "description": "Los más clickeados este mes"

@@ -34,10 +34,6 @@
     }
   },
   "home": {
-    "hero": {
-      "title": "Developer tools",
-      "description": "Discover what's new and what the community reaches for most."
-    },
     "topRanked": {
       "title": "Top ranked",
       "description": "Most clicked this month"
