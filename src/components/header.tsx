@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-import { Logo } from '@/components/logo'
 import { ModeToggle } from '@/components/mode-toggle'
 import { LanguageSwitch } from '@/components/language-switch'
 import type { LanguageTranslations, ThemeTranslations } from '@/i18n/messages'
@@ -30,8 +29,7 @@ export function Header({
             prefetch={false}
             aria-label={homeLabel}
           >
-            <Logo className='size-6 md:size-7' />
-            <span className='hidden md:block text-sm md:text-base'>hubdev</span>
+            <span className='hidden md:block text-base md:text-3xl'>hubdev</span>
           </Link>
           <div className='flex items-center gap-2'>
             <div className='hidden sm:contents'>
