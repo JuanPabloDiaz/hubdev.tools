@@ -8,7 +8,7 @@ import { inter } from '@/fonts'
 
 import { cn } from '@/utils/styles'
 import { isDomainInvalid } from '@/utils/isDomainInvalid'
-import { submitResource } from '@/services/request'
+import { submitResource } from '@/actions/request'
 import { Button } from '@/components/ui/button'
 import {
   Form,
