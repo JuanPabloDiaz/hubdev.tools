@@ -2,8 +2,9 @@
   "name": "hubdev.tools",
   "version": "4.0.0",
   "private": true,
+  "packageManager": "pnpm@10.28.0",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=24.11.0"
   },
   "scripts": {
     "dev": "next dev",
