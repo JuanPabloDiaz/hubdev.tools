@@ -138,6 +138,7 @@
     "websiteUrl": "Website URL",
     "invalidUrl": "Invalid URL.",
     "duplicate": "This resource has already been submitted or added.",
+    "rateLimited": "You have reached your request limit for the day.",
     "success": "Thank you for submitting your resource!",
     "submitting": "Submitting...",
     "close": "Close"

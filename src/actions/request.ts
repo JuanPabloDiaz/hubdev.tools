@@ -51,7 +51,9 @@ export async function submitResource({ formData }: { formData: FormData }) {
     const ip = (await headers()).get('x-forwarded-for') ?? 'local'
     const { success } = await ratelimit.limit(ip)
     if (!success) {
-      throw new Error('You have reached your request limit for the day.')
+      return {
+        msg: 'rate-limited'
+      }
     }
   }
 
@@ -69,14 +71,13 @@ export async function submitResource({ formData }: { formData: FormData }) {
     }
 
     return {
-      msg: 'This resource has already been submitted or added.'
+      msg: 'duplicate'
     }
   } catch (error) {
     // @ts-ignore
     const isAlreadyAdded = error.message.includes('duplicate key')
-    if (isAlreadyAdded) {
-      throw new Error('This resource has already been submitted or added.')
+    return {
+      msg: isAlreadyAdded ? 'duplicate' : 'error'
     }
-    throw new Error('An error ocurred while submitting the resource.')
   }
 }

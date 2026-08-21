@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import { extractDomain } from '@/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 import { inter } from '@/fonts'
@@ -78,10 +79,23 @@ export function SubmitResourceForm({
       const { msg } = await submitResource({
         formData
       })
-      if (msg !== 'ok') {
+      if (msg === 'duplicate') {
         setError('url', {
           type: 'manual',
           message: translations.duplicate
+        })
+        return
+      }
+
+      if (msg === 'rate-limited') {
+        toast.error(translations.rateLimited)
+        return
+      }
+
+      if (msg === 'error') {
+        setError('root.api', {
+          type: 'manual',
+          message: genericError
         })
         return
       }

@@ -138,6 +138,7 @@
     "websiteUrl": "URL del sitio web",
     "invalidUrl": "URL no válida.",
     "duplicate": "Este recurso ya fue enviado o añadido.",
+    "rateLimited": "Has alcanzado el límite de solicitudes por hoy.",
     "success": "¡Gracias por enviar tu recurso!",
     "submitting": "Enviando...",
     "close": "Cerrar"
