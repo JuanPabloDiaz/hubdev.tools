@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Check, Plus, Trash2, X } from 'lucide-react'
+import { Check, Info, Plus, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { CollectionAppearance } from '@/components/collection-appearance'
@@ -102,6 +102,10 @@ export function CollectionsOverview({
               {translations.title}
             </h1>
             <p className='max-w-xl text-sm text-muted-foreground'>{translations.description}</p>
+            <p className='flex items-center gap-1.5 text-xs text-muted-foreground/80'>
+              <Info className='size-3.5 shrink-0' />
+              {translations.localNotice}
+            </p>
           </div>
           <div className='flex items-center gap-3'>
             <span className='text-xs tabular-nums text-muted-foreground'>

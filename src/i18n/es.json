@@ -90,6 +90,7 @@
   "collections": {
     "title": "Colecciones",
     "description": "Organiza recursos en colecciones específicas.",
+    "localNotice": "Las colecciones se guardan localmente en este navegador.",
     "inbox": "Guardados",
     "importedFavorites": "Favoritos importados",
     "new": "Nueva colección",

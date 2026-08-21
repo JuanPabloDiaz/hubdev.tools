@@ -90,6 +90,7 @@
   "collections": {
     "title": "Collections",
     "description": "Organize resources into focused collections.",
+    "localNotice": "Collections are saved locally in this browser.",
     "inbox": "Saved",
     "importedFavorites": "Imported favorites",
     "new": "New collection",
