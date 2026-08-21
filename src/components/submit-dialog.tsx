@@ -13,12 +13,13 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
+import { SubmitFormSkeleton } from '@/components/loading'
 import type { SubmitTranslations } from '@/i18n/messages'
 import { plusJakartaSans } from '@/fonts'
 
 const SubmitResourceForm = dynamic(
   () => import('@/components/submit-resource-form').then((module) => module.SubmitResourceForm),
-  { ssr: false }
+  { ssr: false, loading: () => <SubmitFormSkeleton /> }
 )
 
 export function SubmitDialog({

@@ -27,6 +27,21 @@ export function LoadingResources() {
   )
 }
 
+export function SubmitFormSkeleton() {
+  return (
+    <div
+      className='space-y-4'
+      aria-hidden='true'
+    >
+      <div className='grid gap-2'>
+        <div className='h-4 w-24 animate-pulse rounded bg-neutral-200 dark:bg-neutral-900' />
+        <div className='h-9 w-full animate-pulse rounded-md bg-neutral-200 dark:bg-neutral-900' />
+      </div>
+      <div className='h-10 w-full animate-pulse rounded-md bg-neutral-200 dark:bg-neutral-900' />
+    </div>
+  )
+}
+
 function ResourceSkeleton() {
   return (
     <div
