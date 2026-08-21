@@ -1,27 +1,32 @@
-'use client'
+import { ArrowUpRight } from 'lucide-react'
 
-import Image from 'next/image'
-import { ArrowUpRight, HeartIcon } from 'lucide-react'
-
-import { Resource } from '@/types/resource'
+import { CatalogResource } from '@/types/catalog'
 
 import { inter, plusJakartaSans } from '@/fonts'
 
-import { DEFAULT_BLUR_DATA_URL, HREF_PREFIX } from '@/constants'
+import { HREF_PREFIX } from '@/constants'
 import { cn } from '@/utils/styles'
-import { useFavorite } from '@/hooks/useFavorite'
+import { CollectionBookmarkButton } from '@/components/collection-bookmark-button'
 import { NoResultsSearch } from '@/components/empty-state'
+import { ResourceImage } from '@/components/resource-image'
+import type {
+  CollectionsTranslations,
+  NoResultsTranslations,
+  ResourceTranslations
+} from '@/i18n/messages'
+import type { Locale } from '@/i18n/config'
 
 type ResourceItemProps = {
   id: string
   title: string
   url: string
-  summary: string
+  summary?: string
   brief: string | null
   image: string
   order: number
   placeholder: string | null
-  isFavorite: boolean
+  resourceTranslations: ResourceTranslations
+  collectionTranslations: CollectionsTranslations
 }
 
 export function ResourceItem({
@@ -33,31 +38,30 @@ export function ResourceItem({
   image,
   order,
   placeholder,
-  isFavorite
+  resourceTranslations,
+  collectionTranslations
 }: ResourceItemProps) {
-  const { handleToggleFavorite, isFav } = useFavorite(isFavorite, id)
-
   return (
-    <article className='rounded-lg shadow-xs border transition-colors duration-300 ease-in-out resource-item grid grid-rows-subgrid row-span-2 gap-3 p-2.5 border-light-600/70 bg-light-600/20 hover:bg-light-600/70 dark:border-neutral-800/70 dark:bg-[#101010] dark:hover:bg-[#191919]'>
+    <article className='relative rounded-lg shadow-xs border transition-colors duration-300 ease-in-out resource-item grid grid-rows-subgrid row-span-2 gap-3 p-2.5 border-light-600/70 bg-light-600/20 hover:bg-light-600/70 dark:border-neutral-800/70 dark:bg-[#101010] dark:hover:bg-[#191919]'>
       <div className='flex flex-col gap-3'>
-        <div className='relative w-full h-[190px] rounded-md overflow-hidden border'>
-          <Image
-            loading={order < 4 ? 'eager' : 'lazy'}
-            src={image}
-            fill
-            priority={order === 0}
-            alt={`Picture of ${title}`}
-            className='object-cover object-center'
-            decoding='async'
-            placeholder='blur'
-            blurDataURL={placeholder ?? DEFAULT_BLUR_DATA_URL}
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          />
-        </div>
+        <ResourceImage
+          src={image}
+          title={title}
+          placeholder={placeholder}
+          order={order}
+          screenshotTemplate={resourceTranslations.screenshot}
+        />
         <div className='flex flex-col gap-1.5'>
-          <h2 className={cn(plusJakartaSans.className, 'font-semibold text-balance')}>{title}</h2>
+          <h2
+            className={cn(
+              plusJakartaSans.className,
+              'text-base font-bold leading-5 tracking-tight text-balance text-neutral-950 dark:text-white'
+            )}
+          >
+            {title}
+          </h2>
           <p className={cn(inter.className, 'text-sm text-gray-700 dark:text-link text-pretty')}>
-            {brief ?? summary}
+            {brief || summary}
           </p>
         </div>
       </div>
@@ -68,21 +72,15 @@ export function ResourceItem({
           target='_blank'
           rel='noopener noreferrer'
         >
-          <span className={inter.className}>Go to resource</span>
+          <span className={inter.className}>{resourceTranslations.goTo}</span>
           <ArrowUpRight className='size-4 duration-200 group-hover:translate-x-[1.5px] group-hover:opacity-100' />
         </a>
         <div className='flex gap-1.5'>
-          <div
-            className='cursor-pointer'
-            onClick={handleToggleFavorite}
-          >
-            <HeartIcon
-              className={cn(
-                'size-4 mr-2 hover:scale-110 text-light-800 dark:text-red-400',
-                isFav && 'fill-light-800 dark:fill-red-400'
-              )}
-            />
-          </div>
+          <CollectionBookmarkButton
+            resourceId={id}
+            title={title}
+            translations={collectionTranslations}
+          />
         </div>
       </div>
     </article>
@@ -90,37 +88,46 @@ export function ResourceItem({
 }
 
 type ListResourceProps = {
-  data: Resource[]
-  favoritesIds: string[]
+  data: CatalogResource[]
+  locale: Locale
+  resourceTranslations: ResourceTranslations
+  collectionTranslations: CollectionsTranslations
+  noResultsTranslations: NoResultsTranslations
 }
 
-export function ListResource({ data, favoritesIds }: ListResourceProps) {
-  // Convert to Set for O(1) lookups instead of O(n) includes()
-  const favoritesIdsSet = new Set(favoritesIds)
-
+export function ListResource({
+  data,
+  locale,
+  resourceTranslations,
+  collectionTranslations,
+  noResultsTranslations
+}: ListResourceProps) {
   return (
     <>
       {data && data.length > 0 ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-6'>
-          {data.map(({ id, title, url, summary, image, placeholder, brief }, index) => {
+          {data.map(({ id, title, url, image, placeholder, brief }, index) => {
             return (
               <ResourceItem
                 order={index}
                 key={id}
                 title={title}
                 url={url}
-                summary={summary}
                 brief={brief}
                 image={image}
                 placeholder={placeholder}
                 id={id}
-                isFavorite={favoritesIdsSet.has(id)}
+                resourceTranslations={resourceTranslations}
+                collectionTranslations={collectionTranslations}
               />
             )
           })}
         </div>
       ) : (
-        <NoResultsSearch />
+        <NoResultsSearch
+          locale={locale}
+          translations={noResultsTranslations}
+        />
       )}
     </>
   )

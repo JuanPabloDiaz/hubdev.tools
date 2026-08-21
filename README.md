@@ -40,16 +40,12 @@ A comprehensive collection of essential resources and tools for developers, thou
 - [Shadcn/ui](https://ui.shadcn.com/): Provides beautifully designed components for UI.
 - [Tailwindcss](https://tailwindcss.com/): A utility-first CSS framework for rapid UI development.
 - [Zod](https://github.com/colinhacks/zod): TypeScript-first schema validation with static type inference
-- [Cheerio](https://cheerio.js.org/): A fast, flexible, and lean library for web scraping and parsing HTML.
-- [Playwright](https://playwright.dev/): A framework for end-to-end testing and automation.
-- [Sharp](https://github.com/lovell/sharp): A Node.js library for manipulating images in a variety of ways.
 
 ## Project Summary
 
 - [**public**](public): Public directory for static assets and build output.
 - [**src/app**](src/app): Contains the main application logic and components.
 - [**src/components**](src/components): Houses reusable UI components.
-- [**src/hooks**](src/hooks): Custom React hooks for managing state and side effects.
 - [**src/actions**](src/actions): Server actions for interacting with external APIs.
 - [**src/types**](src/types): TypeScript type definitions.
 - [**src/utils**](src/utils): Miscellaneous utility functions.

@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "title": "hubdev.tools - Developer Tools and Resources",
+    "description": "A great collection of resources and tools for developers. Discover UI inspiration, books, courses, testing tools, icons, and much more.",
+    "categories": "Categories",
+    "search": "Search",
+    "searchTitle": "Search: {query}",
+    "collections": "Collections",
+    "collectionsDescription": "Organize resources into focused collections.",
+    "categoryNotFound": "Category not found",
+    "learnMore": "Learn more at",
+    "recent": "Recently added"
+  },
+  "header": {
+    "home": "Go to home page",
+    "repository": "GitHub",
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "sidebar": {
+    "home": "Home",
+    "collections": "Collections",
+    "categories": "Categories",
+    "count": {
+      "singular": "{count} resource",
+      "plural": "{count} resources"
+    }
+  },
+  "home": {
+    "topRanked": {
+      "title": "Top ranked",
+      "description": "Most clicked this month"
+    },
+    "recent": {
+      "title": "Recently added",
+      "description": "Freshly listed by the community",
+      "viewAll": "View all"
+    }
+  },
+  "search": {
+    "toolbar": {
+      "label": "Search resources",
+      "placeholder": "Search tools, libraries, and resources…",
+      "clear": "Clear search",
+      "submit": "Submit search",
+      "recent": "Recent searches",
+      "validation": "Enter between 2 and 120 characters."
+    },
+    "results": {
+      "label": "Global search",
+      "title": "Results for “{query}”",
+      "resourceSingular": "resource",
+      "resourcePlural": "resources"
+    },
+    "empty": {
+      "title": "No resources found",
+      "description": "We could not find a textual match for “{query}”. Try fewer words or a broader phrase."
+    },
+    "invalid": {
+      "title": "Invalid search query",
+      "description": "Enter between {min} and {max} characters."
+    },
+    "databaseEmpty": {
+      "title": "No results found in database for",
+      "suggestions": "However there are some suggestions that might help:",
+      "items": [
+        "Courses for JavaScript beginners",
+        "Open source analytics platform",
+        "Open source libraries for animations",
+        "Alternatives to store data in the cloud"
+      ]
+    }
+  },
+  "categories": {
+    "filterLabel": "Filter resources by subcategory",
+    "all": "All"
+  },
+  "resources": {
+    "goTo": "Go to resource",
+    "screenshot": "Screenshot of {title}",
+    "loadMore": "Load more resources"
+  },
+  "collections": {
+    "title": "Collections",
+    "description": "Organize resources into focused collections.",
+    "localNotice": "Collections are saved locally in this browser.",
+    "inbox": "Saved",
+    "importedFavorites": "Imported favorites",
+    "new": "New collection",
+    "create": "Create collection",
+    "view": "View details",
+    "cancel": "Cancel",
+    "nameLabel": "Collection name",
+    "namePlaceholder": "e.g. My SaaS Stack",
+    "limit": "{count}/20 collections",
+    "resourceCountSingular": "{count} resource",
+    "resourceCountPlural": "{count} resources",
+    "popover": {
+      "title": "Save to collections",
+      "create": "Create new collection",
+      "unsaved": "Save to collections",
+      "savedSingular": "Saved to {count} collection",
+      "savedPlural": "Saved to {count} collections"
+    },
+    "delete": {
+      "action": "Delete collection",
+      "question": "Delete this collection? Resources saved elsewhere will not be affected.",
+      "confirm": "Delete"
+    },
+    "detail": {
+      "back": "Back to collections",
+      "emptyTitle": "This collection is empty",
+      "emptyDescription": "Save resources from the catalog using the bookmark button.",
+      "open": "Open resource",
+      "remove": "Remove from collection",
+      "unavailable": "Resource unavailable",
+      "unavailableDescription": "This resource is no longer available in the catalog."
+    },
+    "errors": {
+      "storage": "Collections could not be saved in this browser.",
+      "maximum": "You can create up to 20 collections.",
+      "collectionFull": "This collection already contains 15 resources.",
+      "duplicateName": "A collection with this name already exists.",
+      "notFound": "Collection not found."
+    }
+  },
+  "submit": {
+    "button": "Submit resource",
+    "title": "Submit a resource",
+    "description": "Help grow our collection of valuable resources for developers. Submit a website, tool, or article that you find useful.",
+    "websiteUrl": "Website URL",
+    "invalidUrl": "Invalid URL.",
+    "duplicate": "This resource has already been submitted or added.",
+    "success": "Thank you for submitting your resource!",
+    "submitting": "Submitting...",
+    "close": "Close"
+  },
+  "errors": {
+    "title": "Error",
+    "generic": "Something went wrong. Please try again later."
+  },
+  "notFound": {
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "home": "Go back home"
+  }
+}

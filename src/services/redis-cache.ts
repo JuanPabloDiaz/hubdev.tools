@@ -9,14 +9,14 @@ type CacheQuery = {
   }
 }
 
-export const getCache = async ({ input }: { input: string }) => {
+export async function getCache({ input }: { input: string }) {
   const queryCached = (await redis.get(`q:${input}`)) as CacheQuery | null
   if (queryCached != null) {
     return queryCached
   }
 }
 
-export const saveCache = async ({ cache }: { cache: CacheQuery }) => {
+export async function saveCache({ cache }: { cache: CacheQuery }) {
   const { input, data } = cache
   await redis.set(
     `q:${input}`,

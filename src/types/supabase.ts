@@ -41,6 +41,213 @@ export type Database = {
         }
         Relationships: []
       }
+      category_translations: {
+        Row: {
+          category_id: number
+          description: string
+          locale: string
+          title: string
+        }
+        Insert: {
+          category_id: number
+          description: string
+          locale: string
+          title: string
+        }
+        Update: {
+          category_id?: number
+          description?: string
+          locale?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'category_translations_category_id_fkey'
+            columns: ['category_id']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      new_categories: {
+        Row: {
+          created_at: string
+          id: number
+          isActive: boolean
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          isActive?: boolean
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          isActive?: boolean
+          slug?: string
+        }
+        Relationships: []
+      }
+      new_resources: {
+        Row: {
+          clicks: number
+          created_at: string
+          embedding: string | null
+          id: string
+          idCategory: number
+          idSubcategory: number | null
+          image: string
+          last_clicked: string
+          placeholder: string | null
+          slug: string
+          summary: string
+          title: string
+          url: string
+        }
+        Insert: {
+          clicks?: number
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          idCategory: number
+          idSubcategory?: number | null
+          image: string
+          last_clicked?: string
+          placeholder?: string | null
+          slug: string
+          summary: string
+          title: string
+          url: string
+        }
+        Update: {
+          clicks?: number
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          idCategory?: number
+          idSubcategory?: number | null
+          image?: string
+          last_clicked?: string
+          placeholder?: string | null
+          slug?: string
+          summary?: string
+          title?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'new_resources_category_fk'
+            columns: ['idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'new_resources_subcategory_fk'
+            columns: ['idSubcategory']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'new_resources_taxonomy_fk'
+            columns: ['idSubcategory', 'idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
+            referencedColumns: ['id', 'idCategory']
+          }
+        ]
+      }
+      new_subcategories: {
+        Row: {
+          created_at: string
+          id: number
+          idCategory: number
+          isActive: boolean
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          idCategory: number
+          isActive?: boolean
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          idCategory?: number
+          isActive?: boolean
+          slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'new_subcategories_category_fk'
+            columns: ['idCategory']
+            isOneToOne: false
+            referencedRelation: 'new_categories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      resources_translations: {
+        Row: {
+          brief: string
+          description: string
+          locale: string
+          resource_id: string
+        }
+        Insert: {
+          brief: string
+          description: string
+          locale: string
+          resource_id: string
+        }
+        Update: {
+          brief?: string
+          description?: string
+          locale?: string
+          resource_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'resources_translations_resource_id_fkey'
+            columns: ['resource_id']
+            isOneToOne: false
+            referencedRelation: 'new_resources'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      subcategory_translations: {
+        Row: {
+          locale: string
+          subcategory_id: number
+          title: string
+        }
+        Insert: {
+          locale: string
+          subcategory_id: number
+          title: string
+        }
+        Update: {
+          locale?: string
+          subcategory_id?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'subcategory_translations_subcategory_id_fkey'
+            columns: ['subcategory_id']
+            isOneToOne: false
+            referencedRelation: 'new_subcategories'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       pines: {
         Row: {
           created_at: string
@@ -298,6 +505,19 @@ export type Database = {
           placeholder: string
           summary: string
           brief: string | null
+          title: string
+          url: string
+        }[]
+      }
+      search_resources_text: {
+        Args: { display_locale?: string; match_count?: number; search_query: string }
+        Returns: {
+          brief: string | null
+          category: string
+          id: string
+          image: string
+          placeholder: string | null
+          summary: string
           title: string
           url: string
         }[]

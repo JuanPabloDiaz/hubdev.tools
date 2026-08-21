@@ -5,11 +5,11 @@ import { createServerClient } from '@supabase/ssr'
 
 import { Database } from '@/types/supabase'
 
-const fetchWithTags = (
+function fetchWithTags(
   input: RequestInfo | URL,
   init?: RequestInit,
   tag?: string
-): Promise<Response> => {
+): Promise<Response> {
   return fetch(input, {
     ...init,
     next: {
@@ -19,7 +19,7 @@ const fetchWithTags = (
   })
 }
 
-export const createSupabaseServerClient = async (tag?: string) => {
+export async function createSupabaseServerClient(tag?: string) {
   const cookieStore = await cookies()
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

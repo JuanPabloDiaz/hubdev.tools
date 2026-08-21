@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "title": "hubdev.tools - Herramientas y recursos para desarrolladores",
+    "description": "Una gran colección de recursos y herramientas para desarrolladores. Descubre inspiración de UI, libros, cursos, herramientas de testing, iconos y mucho más.",
+    "categories": "Categorías",
+    "search": "Buscar",
+    "searchTitle": "Búsqueda: {query}",
+    "collections": "Colecciones",
+    "collectionsDescription": "Organiza recursos en colecciones específicas.",
+    "categoryNotFound": "Categoría no encontrada",
+    "learnMore": "Más información en",
+    "recent": "Agregados recientemente"
+  },
+  "header": {
+    "home": "Ir a la página de inicio",
+    "repository": "GitHub",
+    "language": "Idioma",
+    "english": "Inglés",
+    "spanish": "Español"
+  },
+  "theme": {
+    "toggle": "Cambiar tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "sidebar": {
+    "home": "Inicio",
+    "collections": "Colecciones",
+    "categories": "Categorías",
+    "count": {
+      "singular": "{count} recurso",
+      "plural": "{count} recursos"
+    }
+  },
+  "home": {
+    "topRanked": {
+      "title": "Mejor rankeados",
+      "description": "Los más clickeados este mes"
+    },
+    "recent": {
+      "title": "Agregados recientemente",
+      "description": "Recién publicados por la comunidad",
+      "viewAll": "Ver todos"
+    }
+  },
+  "search": {
+    "toolbar": {
+      "label": "Buscar recursos",
+      "placeholder": "Busca herramientas, librerías y recursos…",
+      "clear": "Limpiar búsqueda",
+      "submit": "Buscar",
+      "recent": "Búsquedas recientes",
+      "validation": "Introduce entre 2 y 120 caracteres."
+    },
+    "results": {
+      "label": "Búsqueda global",
+      "title": "Resultados para «{query}»",
+      "resourceSingular": "recurso",
+      "resourcePlural": "recursos"
+    },
+    "empty": {
+      "title": "No se encontraron recursos",
+      "description": "No encontramos una coincidencia textual para «{query}». Prueba con menos palabras o una frase más general."
+    },
+    "invalid": {
+      "title": "Consulta de búsqueda no válida",
+      "description": "Introduce entre {min} y {max} caracteres."
+    },
+    "databaseEmpty": {
+      "title": "No se encontraron resultados en la base de datos para",
+      "suggestions": "Sin embargo, estas sugerencias podrían ayudarte:",
+      "items": [
+        "Cursos para principiantes de JavaScript",
+        "Plataforma de analítica open source",
+        "Librerías open source para animaciones",
+        "Alternativas para almacenar datos en la nube"
+      ]
+    }
+  },
+  "categories": {
+    "filterLabel": "Filtrar recursos por subcategoría",
+    "all": "Todas"
+  },
+  "resources": {
+    "goTo": "Ir al recurso",
+    "screenshot": "Captura de pantalla de {title}",
+    "loadMore": "Cargar más recursos"
+  },
+  "collections": {
+    "title": "Colecciones",
+    "description": "Organiza recursos en colecciones específicas.",
+    "localNotice": "Las colecciones se guardan localmente en este navegador.",
+    "inbox": "Guardados",
+    "importedFavorites": "Favoritos importados",
+    "new": "Nueva colección",
+    "create": "Crear colección",
+    "view": "Ver detalle",
+    "cancel": "Cancelar",
+    "nameLabel": "Nombre de la colección",
+    "namePlaceholder": "Ej. Mi stack SaaS",
+    "limit": "{count}/20 colecciones",
+    "resourceCountSingular": "{count} recurso",
+    "resourceCountPlural": "{count} recursos",
+    "popover": {
+      "title": "Guardar en colecciones",
+      "create": "Crear nueva colección",
+      "unsaved": "Guardar en colecciones",
+      "savedSingular": "Guardado en {count} colección",
+      "savedPlural": "Guardado en {count} colecciones"
+    },
+    "delete": {
+      "action": "Eliminar colección",
+      "question": "¿Eliminar esta colección? Los recursos guardados en otras no se verán afectados.",
+      "confirm": "Eliminar"
+    },
+    "detail": {
+      "back": "Volver a colecciones",
+      "emptyTitle": "Esta colección está vacía",
+      "emptyDescription": "Guarda recursos del catálogo usando el botón de marcador.",
+      "open": "Abrir recurso",
+      "remove": "Quitar de la colección",
+      "unavailable": "Recurso no disponible",
+      "unavailableDescription": "Este recurso ya no está disponible en el catálogo."
+    },
+    "errors": {
+      "storage": "No se pudieron guardar las colecciones en este navegador.",
+      "maximum": "Puedes crear hasta 20 colecciones.",
+      "collectionFull": "Esta colección ya contiene 15 recursos.",
+      "duplicateName": "Ya existe una colección con este nombre.",
+      "notFound": "No se encontró la colección."
+    }
+  },
+  "submit": {
+    "button": "Enviar recurso",
+    "title": "Enviar un recurso",
+    "description": "Ayúdanos a ampliar nuestra colección de recursos valiosos para desarrolladores. Envía un sitio web, una herramienta o un artículo que te resulte útil.",
+    "websiteUrl": "URL del sitio web",
+    "invalidUrl": "URL no válida.",
+    "duplicate": "Este recurso ya fue enviado o añadido.",
+    "success": "¡Gracias por enviar tu recurso!",
+    "submitting": "Enviando...",
+    "close": "Cerrar"
+  },
+  "errors": {
+    "title": "Error",
+    "generic": "Algo salió mal. Inténtalo de nuevo más tarde."
+  },
+  "notFound": {
+    "description": "La página que buscas no existe o ha sido movida.",
+    "home": "Volver al inicio"
+  }
+}

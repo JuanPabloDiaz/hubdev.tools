@@ -16,29 +16,40 @@ type ResourcesWithCategories = {
   summary: string
   brief: string | null
   placeholder: string | null
-  categories:
+  new_categories:
     | {
         name: string
+        name_es: string | null
       }
     | {
         slug: string | null
         name: string
+        name_es: string | null
       }
     | null
 }
 
-const formatDataWithCategories = ({ resources }: { resources: ResourcesWithCategories[] }) => {
+function formatDataWithCategories({ resources }: { resources: ResourcesWithCategories[] }) {
   return resources.map((item) => {
-    const { categories, ...resource } = item
-    const { name } = categories ?? {}
+    const { new_categories: categories, ...resource } = item
+    const { name, name_es } = categories ?? {}
     return {
       ...resource,
-      category: name ?? ''
+      category: name ?? '',
+      categoryEs: name_es
     }
   })
 }
 
-export async function search({ q, slug }: { q?: string; slug?: string }): Promise<
+export async function search({
+  q,
+  slug,
+  subcategory
+}: {
+  q?: string
+  slug?: string
+  subcategory?: string
+}): Promise<
   | QueryData
   | {
       error: string
@@ -68,7 +79,8 @@ export async function search({ q, slug }: { q?: string; slug?: string }): Promis
       const result = await getResourcesByCategorySlug({
         from: 0,
         to: 11,
-        slug
+        slug,
+        subcategory
       })
       if (!result) {
         return {

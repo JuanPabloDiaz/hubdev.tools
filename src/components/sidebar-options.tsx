@@ -1,5 +1,8 @@
 import { ListCategories } from './list-categories'
 import { CategoryPill } from './category-pill'
+import type { Locale } from '@/i18n/config'
+import { getDictionary, type Dictionary } from '@/i18n/dictionaries'
+import { getLocalizedHref } from '@/i18n/routing'
 
 function OptionHeader({ title }: { title: string }) {
   return (
@@ -9,33 +12,44 @@ function OptionHeader({ title }: { title: string }) {
   )
 }
 
-function Discover() {
+function HomeNav({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
   return (
     <CategoryPill
-      name='Discover'
-      slug='discover'
-      href='/'
+      name={dictionary.sidebar.home}
+      slug='home'
+      href={getLocalizedHref('/', locale)}
+      exact
     />
   )
 }
 
-async function Favorites() {
+function Collections({ dictionary, locale }: { dictionary: Dictionary; locale: Locale }) {
   return (
     <CategoryPill
-      name='Favorites'
-      slug='favorites'
-      href='/favorites'
+      name={dictionary.sidebar.collections}
+      slug='collections'
+      href={getLocalizedHref('/collections', locale)}
     />
   )
 }
 
-export function SidebarOptions() {
+export async function SidebarOptions({ locale }: { locale: Locale }) {
+  const dictionary = await getDictionary(locale)
   return (
     <div className='flex space-y-1 overflow-y-auto md:flex-col md:overflow-y-visible pt-0 px-0.5 md:px-0'>
-      <Favorites />
-      <Discover />
-      <OptionHeader title='Categories' />
-      <ListCategories />
+      <HomeNav
+        dictionary={dictionary}
+        locale={locale}
+      />
+      <Collections
+        dictionary={dictionary}
+        locale={locale}
+      />
+      <OptionHeader title={dictionary.sidebar.categories} />
+      <ListCategories
+        locale={locale}
+        countTranslations={dictionary.sidebar.count}
+      />
     </div>
   )
 }
