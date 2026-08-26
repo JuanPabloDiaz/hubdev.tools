@@ -25,7 +25,7 @@ async function addRequest({ request }: { request: RequestResource }) {
 // Otherwise, we'll check whether it's submitted or not on the requests table
 async function isAlreadySubmittedOrAdded({ url }: { url: string }) {
   const supabase = await createSupabaseServerClient()
-  const { data, error } = await supabase.from('resources').select('id').eq('url', url)
+  const { data, error } = await supabase.from('new_resources').select('id').eq('url', url)
 
   if (error) throw error
 
